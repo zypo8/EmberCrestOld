@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="-1" width="70" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
+  <image source="../img/terrain.png" width="1024" height="1024"/>
+  <tile id="16">
+   <properties>
+    <property name="exit" value=""/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="exit" value=""/>
+   </properties>
+  </tile>
+  <tile id="48">
+   <properties>
+    <property name="exit" value=""/>
+   </properties>
+  </tile>
+  <tile id="49">
+   <properties>
+    <property name="exit" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="70" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztmLEOgzAMRD2y0fYr2Ej7/x9XWsnomjrBVWM5gIdbkEDJ3VN8YSSiUaGLoay/r1EC4ZrmDSVDWX9foyFbB/syhd5esDfsyxBaPRkoeEGxLxMFL6jg5T9eNPO7tTzZZV9wTqNvvMat2d1a3uxKczr3DXuL1IMs8vLmBZmRMkLfpD6YyCYvb15w76WM8g6aP7fItXdetJ62znYPvGg8TT++d3Re0NfgRfY1eAleNLkGL58dHXvwGXnBO8tM33eD1qzshZfaPeaofRfPh62+65GVJysaXqy46FWYS0+8eAtZuC66VbzzztCDlxcn90WPinfeGXrwwt5IXJyRF9w3ni89/nO1UGmf+ZyW+tuRVdonzulafzuj+Hx5AqPp1vc=
+  </data>
+ </layer>
+</map>
