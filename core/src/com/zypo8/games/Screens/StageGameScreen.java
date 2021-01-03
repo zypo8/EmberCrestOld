@@ -14,7 +14,7 @@ import com.zypo8.games.ui.windows.InteractWindow;
 
 
 public class StageGameScreen extends Stage {
-    private MyRPGGame game;
+    private final MyRPGGame game;
     private InteractWindow window;
     private Vector2 coord;
     private Interactable hitActor;
@@ -41,10 +41,11 @@ public class StageGameScreen extends Stage {
             return false;
         }
         if(hitActor != null) {
-            if (hitActor.getClass().getName().substring(0, 22).equals("com.zypo8.games.actors")) {
+            if (hitActor.getClass().getName().startsWith("com.zypo8.games.actors")) {
                 if (window != null)
                     window.remove();
                 Gdx.app.log("HIT", hitActor.getName());
+                Player.playerInteractNPC = hitActor;
                 if(button == 0){
                     if(Player.destX > hitActor.getX()-33 && Player.destX < hitActor.getX()+33) {
                         if(Player.destY > hitActor.getY()-33 && Player.destY < hitActor.getY()+33) {

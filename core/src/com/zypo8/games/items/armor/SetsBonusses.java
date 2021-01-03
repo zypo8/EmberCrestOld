@@ -28,7 +28,7 @@ public enum SetsBonusses {
         setItemsRequired[9] = (glovesId);
     }
 
-    Integer[] getItemsRequired(){
+    public Integer[] getSetItemsRequired(){
         return setItemsRequired;
     }
 

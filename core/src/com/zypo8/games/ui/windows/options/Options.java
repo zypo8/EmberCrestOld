@@ -16,7 +16,7 @@ import com.zypo8.games.ui.windows.options.all_options.KeybindsOptions;
 import com.zypo8.games.ui.windows.options.all_options.VideoOptions;
 
 public class Options extends Window {
-    private OptionsButtons optionsButtons;
+    private final OptionsButtons optionsButtons;
     private Table table;
     public GeneralOptions generalOptions;
     public InterfaceOptions interfaceOptions;
@@ -38,7 +38,7 @@ public class Options extends Window {
         setVisible(false);
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("img/ui/windows/options_window_bg.png"))));
         setBackground(drawable);
-        edge = 3;
+        //edge = 3;
         setY(Gdx.graphics.getHeight()/2-getHeight()/2);
         setX(Gdx.graphics.getWidth()/2-getWidth()/2);
         refreshOptions(0);

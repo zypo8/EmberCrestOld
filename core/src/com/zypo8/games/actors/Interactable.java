@@ -1,6 +1,6 @@
 package com.zypo8.games.actors;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.zypo8.games.Screens.load_screen.LoadScreen;
 import com.zypo8.games.ui.HUDStage;
 import com.zypo8.games.ui.Tools;
 
@@ -18,8 +19,8 @@ public class Interactable extends Actor {
     protected Sprite sprite;
     protected InteractButtons interactButtons;
 
-    public Interactable(String spriteFIle, int posX, int posY, String actorName) {
-        sprite = new Sprite(new Texture(Gdx.files.internal(spriteFIle)));
+    public Interactable(AssetDescriptor activeSprite, int posX, int posY, String actorName) {
+        sprite = new Sprite((Texture) LoadScreen.assetManager.get(activeSprite));
         setPosition(posX, posY);
         this.setName(actorName);
         this.setTouchable(Touchable.enabled);
@@ -28,8 +29,8 @@ public class Interactable extends Actor {
         interactButtons = new InteractButtons(Tools.getSkin());
     }
 
-    public Interactable(String spriteFIle, int posX, int posY, HUDStage hudStage, String actorName) {
-        sprite = new Sprite(new Texture(Gdx.files.internal(spriteFIle)));
+    public Interactable(AssetDescriptor activeSprite, int posX, int posY, HUDStage hudStage, String actorName) {
+        sprite = new Sprite((Texture) LoadScreen.assetManager.get(activeSprite));
         setPosition(posX, posY);
         this.hudStage = hudStage;
         this.setName(actorName);

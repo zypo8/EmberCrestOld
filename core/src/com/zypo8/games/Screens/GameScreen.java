@@ -5,17 +5,16 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zypo8.games.MyRPGGame;
 import com.zypo8.games.Screens.load_game_system.LoadGame;
+import com.zypo8.games.Screens.load_screen.LoadScreen;
 import com.zypo8.games.abilities.buffs.Buffs;
-import com.zypo8.games.abilities.skills.palladyn_skills.HardenessSkill;
 import com.zypo8.games.actors.player.Player;
 import com.zypo8.games.items.InventorySlot;
+import com.zypo8.games.items.ItemLocation;
 import com.zypo8.games.items.Items;
-import com.zypo8.games.items.Location;
 import com.zypo8.games.items.TalentSlot;
 import com.zypo8.games.items.armor.Armor;
 import com.zypo8.games.levels.GameWorld;
@@ -28,13 +27,13 @@ import com.zypo8.games.ui.windows.TalentsWindow;
 
 
 public class GameScreen implements Screen {
-    private OrthographicCamera camera;
+    private final OrthographicCamera camera;
     public static StageGameScreen stage;
-    private MyRPGGame game;
+    private final MyRPGGame game;
     public static Player player;
-    private Viewport viewport;
+    private final Viewport viewport;
     public static HUD hud;
-    private InputMultiplexer multiplexer = new InputMultiplexer();
+    private final InputMultiplexer multiplexer = new InputMultiplexer();
 
     public static GameWorld gameWorld;
     public static int floor;
@@ -53,7 +52,7 @@ public class GameScreen implements Screen {
         player = LoadGame.player;
         player.setHudStage(hud.hudStage);
         player.setGameScreenStage(stage);
-        player.setCollisionLayer((TiledMapTileLayer) gameWorld.map.getLayers().get(0));
+        player.setCollisionLayer(gameWorld.map.getLayers());
         hud.hudStage.player = player;
         playerInitInventory();
 
@@ -70,25 +69,29 @@ public class GameScreen implements Screen {
     private void playerInitInventory() {
         for (InventorySlot inventorySlot:InventoryWindow.inventorySlots) {
             if(LoadGame.inventoryData.get("Slot"+inventorySlot.getSlotID()) != null){
-                inventorySlot.setItem(Items.getItemById(LoadGame.toIntExact((Long) LoadGame.inventoryData.get("Slot"+inventorySlot.getSlotID())), Location.Inventory));
+                inventorySlot.setItem(Items.getItemById(LoadGame.toIntExact((Long) LoadGame.inventoryData.get("Slot"+inventorySlot.getSlotID())), ItemLocation.Inventory));
                 inventorySlot.setAmount( LoadGame.toIntExact((Long) LoadGame.inventoryData.get("Slot"+inventorySlot.getSlotID()+"A")));
             }
         }
         for(InventorySlot inventorySlot: Actionbar.inventorySlots)
             if(LoadGame.actionBarData.get("Slot"+inventorySlot.getSlotID()) != null){
-                inventorySlot.setItem(Items.getItemById(LoadGame.toIntExact((Long)LoadGame.actionBarData.get("Slot"+inventorySlot.getSlotID())), Location.ActionBar));
+                System.out.println(LoadGame.actionBarData.get("Slot"+inventorySlot.getSlotID())+"DUPCZIKONGO");
+                inventorySlot.setItem(Items.getItemById(LoadGame.toIntExact((Long)LoadGame.actionBarData.get("Slot"+inventorySlot.getSlotID())), ItemLocation.ActionBar));
                 inventorySlot.setAmount( LoadGame.toIntExact((Long) LoadGame.actionBarData.get("Slot"+inventorySlot.getSlotID()+"A")));
 
             }
         for(InventorySlot inventorySlot: Buffbar.inventorySlots)
             if(LoadGame.buffBarData.get("Slot"+inventorySlot.getSlotID()) != null){
-                inventorySlot.setItem(Buffs.getBuffById(LoadGame.toIntExact(((Long)LoadGame.buffBarData.get("Slot"+inventorySlot.getSlotID())))));
-                inventorySlot.setAmount( LoadGame.toIntExact((Long) LoadGame.buffBarData.get("Slot"+inventorySlot.getSlotID()+"A")));
+                System.out.println(LoadGame.toIntExact(((Long)LoadGame.buffBarData.get("Slot"+inventorySlot.getSlotID()))));
+                Buffbar.addItem(new InventorySlot(Buffs.getBuffById(LoadGame.toIntExact(((Long)LoadGame.buffBarData.get("Slot"+inventorySlot.getSlotID())))), LoadGame.toIntExact((Long) LoadGame.buffBarData.get("Slot"+inventorySlot.getSlotID()+"A"))));
+//                inventorySlot.setItem(Buffs.getBuffById(LoadGame.toIntExact(((Long)LoadGame.buffBarData.get("Slot"+inventorySlot.getSlotID())))));
+//                inventorySlot.setAmount( LoadGame.toIntExact((Long) LoadGame.buffBarData.get("Slot"+inventorySlot.getSlotID()+"A")));
             }
         for(InventorySlot inventorySlot: DeBuffbar.inventorySlots)
             if(LoadGame.deBuffBarData.get("Slot"+inventorySlot.getSlotID()) != null){
-                inventorySlot.setItem(Buffs.getBuffById(LoadGame.toIntExact(((Long)LoadGame.deBuffBarData.get("Slot"+inventorySlot.getSlotID())))));
-                inventorySlot.setAmount( LoadGame.toIntExact((Long) LoadGame.deBuffBarData.get("Slot"+inventorySlot.getSlotID()+"A")));
+                DeBuffbar.addItem(new InventorySlot(Buffs.getBuffById(LoadGame.toIntExact(((Long)LoadGame.deBuffBarData.get("Slot"+inventorySlot.getSlotID())))), LoadGame.toIntExact((Long) LoadGame.deBuffBarData.get("Slot"+inventorySlot.getSlotID()+"A"))));
+//                inventorySlot.setItem(Buffs.getBuffById(LoadGame.toIntExact(((Long)LoadGame.deBuffBarData.get("Slot"+inventorySlot.getSlotID())))));
+//                inventorySlot.setAmount( LoadGame.toIntExact((Long) LoadGame.deBuffBarData.get("Slot"+inventorySlot.getSlotID()+"A")));
 
             }
         for(Armor armor:LoadGame.equipment){
@@ -98,13 +101,11 @@ public class GameScreen implements Screen {
         for (TalentSlot talentSlot: TalentsWindow.talentSlots){
             hud.hudStage.addActor(talentSlot.getTalent());
         }
+        hud.setOnTopHud();
     }
 
     @Override
     public void show() {
-        //DeBuffbar.addItem(new InventorySlot(new Sickness(), 1));
-        Actionbar.addItem(new InventorySlot(new HardenessSkill(), 1));
-        //Buffbar.addItem(new InventorySlot(new MithrilSetBonusEffect(), 1));
     }
 
     @Override
@@ -120,18 +121,12 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(hud.hudStage.getCamera().combined);
         hud.hudStage.draw();
         //PlayerFrame.refreshHp();
-       // PlayerFrame.refreshMana();
+        //PlayerFrame.refreshMana();
     }
 
     private void update(float delta) {
         stage.act(delta);
         hud.hudStage.act(delta);
-//        if (player.playerBattleStart) {
-//            player.playerBattleStart = false;
-//            playerPosX = (int) player.getX();
-//            playerPosY = (int) player.getY();
-//            game.setScreen(new BattleScreen(game, this));
-//        }
     }
 
     private void cameraUpdate() {
@@ -144,7 +139,7 @@ public class GameScreen implements Screen {
     public static void worldUpdate(){
         //world = new World("maps/map", stage, hud.hudStage);
         gameWorld.update("maps/map");
-        player.setCollisionLayer((TiledMapTileLayer) gameWorld.map.getLayers().get(0));
+        player.setCollisionLayer(gameWorld.map.getLayers());
     }
     public static GameWorld getGameWorld(){
         return gameWorld;
@@ -187,5 +182,7 @@ public class GameScreen implements Screen {
         gameWorld.map.dispose();
         gameWorld.renderer.dispose();
         stage.dispose();
+        LoadScreen.assetManager.dispose();
+
     }
 }

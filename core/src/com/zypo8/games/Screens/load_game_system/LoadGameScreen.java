@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zypo8.games.MyRPGGame;
 import com.zypo8.games.Screens.MenuScreen;
+import com.zypo8.games.Screens.load_screen.LoadScreen;
 import com.zypo8.games.ui.Tools;
 import com.zypo8.games.ui.windows.SaveContainerWindow;
 
@@ -22,13 +23,13 @@ import java.io.File;
 public class LoadGameScreen implements Screen {
     public static File SelectedSave;
     public SaveContainerWindow saveContainerWindow;
-    private MyRPGGame game;
-    private OrthographicCamera camera;
-    private Viewport viewport;
-    private LoadGameScreenStage stage;
+    private final MyRPGGame game;
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
+    private final LoadGameScreenStage stage;
     private Table table;
     private TextButton backButton, loadButton;
-    private Sprite backgroundSprite;
+    private final Sprite backgroundSprite;
 
     public LoadGameScreen(MyRPGGame game) {
         this.game = game;
@@ -92,7 +93,8 @@ public class LoadGameScreen implements Screen {
         }
         System.out.println("LOADING");
         dispose();
-        new LoadGame(game, SelectedSave).LoadGame();
+        //new LoadGame(game, LoadGameScreen.SelectedSave).LoadGame();
+        game.setScreen(new LoadScreen(game));
     }
 
 

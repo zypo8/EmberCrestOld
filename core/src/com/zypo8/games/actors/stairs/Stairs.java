@@ -1,5 +1,6 @@
 package com.zypo8.games.actors.stairs;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.zypo8.games.Screens.GameScreen;
@@ -8,8 +9,8 @@ import com.zypo8.games.ui.HUDStage;
 
 public class Stairs extends Interactable {
     protected int maxFloor, minFloor;
-    public Stairs(String spriteFIle, int posX, int posY, HUDStage hudStage, String actorName, int minFloor, int maxFloor) {
-        super(spriteFIle, posX, posY, hudStage, actorName);
+    public Stairs(AssetDescriptor activeSprite, int posX, int posY, HUDStage hudStage, String actorName, int minFloor, int maxFloor) {
+        super(activeSprite, posX, posY, hudStage, actorName);
         this.minFloor = minFloor;
         this.maxFloor = maxFloor;
     }

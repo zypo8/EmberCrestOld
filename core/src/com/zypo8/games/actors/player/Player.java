@@ -1,30 +1,41 @@
 package com.zypo8.games.actors.player;
 
 
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.zypo8.games.MyRPGGame;
 import com.zypo8.games.Screens.StageGameScreen;
 import com.zypo8.games.Screens.load_game_system.LoadGame;
+import com.zypo8.games.actors.Interactable;
 import com.zypo8.games.ui.HUDStage;
+import com.zypo8.games.ui.hud.playerFrame.PlayerFrame;
 import com.zypo8.games.ui.windows.EquipmentWindow;
 import com.zypo8.games.ui.windows.InventoryWindow;
+import com.zypo8.games.ui.windows.SpellBoockWindow;
 import com.zypo8.games.ui.windows.TalentsWindow;
+
+import static com.zypo8.games.ui.HUD.setCombatText;
 
 public class Player extends Character{
 
 
     private StageGameScreen gameScreenStage;
     public PlayerStats playerStats;
+    public static Interactable playerInteractNPC;
 
     //move
-    private float speed = 256f;
+    private final float speed = 256f;
     private String move;
     public static int destX, destY;
     public static boolean Player_moving;
+    public static int steps;
     //collision
     private TiledMapTileLayer collisionLayer;
+    private TiledMapTileLayer collisionLayer1;
     private boolean colision;
     private float tileWidth, tileHeight;
 
@@ -37,12 +48,12 @@ public class Player extends Character{
     public static InventoryWindow inventoryWindow;
     public static TalentsWindow talentsWindow;
     public static EquipmentWindow equipmentWindow;
+    public static SpellBoockWindow spellBoockWindow;
     public int PlayerClassId;
 
 
-
-    public Player(String spriteFIle, int posX, int posY, int PlayerClassId) {
-        super(spriteFIle, posX, posY, "Player");
+    public Player(AssetDescriptor activeSprite, int posX, int posY, int PlayerClassId) {
+        super(activeSprite, posX, posY, "Player");
         playerStats = new PlayerStats();
         this.PlayerClassId = PlayerClassId;
 
@@ -57,11 +68,44 @@ public class Player extends Character{
         inventoryWindow = new InventoryWindow();
         talentsWindow = new TalentsWindow(PlayerClassId);
         equipmentWindow = new EquipmentWindow();
+        spellBoockWindow = new SpellBoockWindow(PlayerClassId);
 
         inventoryWindow.setVisible(false);
         talentsWindow.setVisible(false);
         equipmentWindow.setVisible(false);
+        spellBoockWindow.setVisible(false);
         
+    }
+
+    public static void addExp(int exp) {
+        if(PlayerStats.getEXP()+exp >= PlayerStats.getExpToNextLevel()){
+            levelUP();
+            int leftExp = PlayerStats.getEXP()+exp - PlayerStats.getExpToNextLevel();
+            PlayerStats.setEXP(leftExp);
+        }else {
+            PlayerStats.setEXP(PlayerStats.getEXP()+exp);
+            PlayerFrame.refreshPlayerFrame();
+        }
+        setCombatText("+ "+exp+" XP", new Color(0x0ee9e9ff));
+
+    }
+
+    public static void DamagePlayer(int amount){
+        setCombatText("- "+amount, Color.RED);
+        if(amount*PlayerStats.getDMGTakenMod() >= PlayerStats.getHEALTH()){
+            //setScreen(new GameOverScreen);
+        }
+        PlayerStats.setHEALTH(PlayerStats.getHEALTH()-(int)(amount*PlayerStats.getDMGTakenMod()));
+        PlayerFrame.refreshPlayerFrame();
+    }
+    public static void HealPlayer(int amount){
+        setCombatText("+ "+amount, Color.GREEN);
+        PlayerStats.setHEALTH(PlayerStats.getHEALTH()+(int)(amount*PlayerStats.getHEALDoneMod()));
+        PlayerFrame.refreshPlayerFrame();
+    }
+
+    private static void levelUP() {
+        PlayerStats.setLEVEL(PlayerStats.getLEVEL()+1);
     }
 
     @Override
@@ -77,12 +121,11 @@ public class Player extends Character{
 
     private void move(float delta) {
         if(getY() == destY && getX() == destX){
-            moving = false;
-            if(playerBattle){
-                playerBattle = false;
-                playerBattleStart = true;
+            if(moving) {
+                steps++;
+                playerInteractNPC = null;
             }
-
+            moving = false;
         }
         if(gameScreenStage.wsad.size-1 >= 0){
             move = gameScreenStage.wsad.get(gameScreenStage.wsad.size-1);
@@ -159,7 +202,11 @@ public class Player extends Character{
 
     protected boolean collision(String KeyWord, int x, int y) {
         colision = collisionLayer.getCell((int) ((getX()+x)/ tileWidth), (int) ((getY()+y)/tileHeight)).getTile().getProperties().containsKey(KeyWord);
-        //System.out.println((int)((getX())/ tileWidth) + ":"+(int)((getY())/tileHeight)+ colision+ "|"+ (int) ((getX()+x)/ tileWidth)+ ":"+ (int) ((getY()+y)/tileHeight));
+        if(!colision) {
+            if(collisionLayer1 != null && collisionLayer1.getCell((int) ((getX() + x) / tileWidth), (int) ((getY() + y) / tileHeight)) != null)
+                colision = collisionLayer1.getCell((int) ((getX() + x) / tileWidth), (int) ((getY() + y) / tileHeight)).getTile().getProperties().containsKey(KeyWord);
+        }
+        System.out.println((int)((getX())/ tileWidth) + ":"+(int)((getY())/tileHeight)+ colision+ "|"+ (int) ((getX()+x)/ tileWidth)+ ":"+ (int) ((getY()+y)/tileHeight));
         return colision;
     }
 
@@ -196,10 +243,12 @@ public class Player extends Character{
         this.gameScreenStage = gameScreenStage;
     }
 
-    public void setCollisionLayer(TiledMapTileLayer collisionLayer) {
-        this.collisionLayer = collisionLayer;
-        tileWidth = collisionLayer.getTileWidth();
-        tileHeight = collisionLayer.getTileHeight();
+    public void setCollisionLayer(MapLayers collisionLayer) {
+        this.collisionLayer = (TiledMapTileLayer)collisionLayer.get(0);
+        //System.out.println(collisionLayer.size());
+        this.collisionLayer1 = (TiledMapTileLayer)collisionLayer.get(1);
+        tileWidth = this.collisionLayer.getTileWidth();
+        tileHeight = this.collisionLayer.getTileHeight();
     }
 
     @Override
@@ -209,6 +258,7 @@ public class Player extends Character{
         hudStage.addActor(talentsWindow);
         hudStage.addActor(equipmentWindow);
         hudStage.addActor(MyRPGGame.menuWIndow);
+        hudStage.addActor(spellBoockWindow);
     }
 
     public static EquipmentWindow getEquipmentWindow() {

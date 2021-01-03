@@ -1,6 +1,7 @@
 package com.zypo8.games.actors.player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,14 +19,14 @@ public class Character extends Interactable {
     protected Animation<TextureRegion> walkUp;
     protected Animation<TextureRegion> characterAnimatoin;
 
-    public Character(String spriteFIle, int posX, int posY, String actorName) {
-        super(spriteFIle, posX, posY, actorName);
+    public Character(AssetDescriptor activeSprite, int posX, int posY, String actorName) {
+        super(activeSprite, posX, posY, actorName);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth()/4, sprite.getHeight()/4);
         setUpAnimation();
     }
 
-    public Character(String spriteFIle, int posX, int posY, HUDStage hudStage, String actorName) {
-        super(spriteFIle, posX, posY, hudStage, actorName);
+    public Character(AssetDescriptor activeSprite, int posX, int posY, HUDStage hudStage, String actorName) {
+        super(activeSprite, posX, posY, hudStage, actorName);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth()/4, sprite.getHeight()/4);
         setUpAnimation();
     }

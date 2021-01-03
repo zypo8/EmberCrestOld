@@ -19,10 +19,8 @@ public class HealthBar extends ProgressBar2 {
         setWidth(width);
         setHeight(height);
 
-        setAnimateDuration(0.0f);
-        //setValue(PlayerStats.getHEALTH());
+        setAnimateDuration(1.0f);
         setValue(PlayerStats.getHEALTH());
-        //setValue(PlayerStats.getMaxHEALTH());
 
         setAnimateDuration(0.25f);
     }

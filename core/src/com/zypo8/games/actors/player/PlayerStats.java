@@ -1,7 +1,8 @@
 package com.zypo8.games.actors.player;
 
 public class PlayerStats {
-    public static int HEALTH = 77, maxHEALTH = 150, MANA = 43, maxMANA = 120, EXP = 11, LEVEL;
+    public static int HEALTH = 77, maxHEALTH = 150, MANA = 43, maxMANA = 120, EXP = 11, LEVEL, EXP_TO_NEXT_LEVEL;
+    public static float DMGTakenMod = 1, DMGDoneMod = 1, HEALTakenMod = 1, HEALDoneMod = 1;
 
     //professions
     public static int GatheringLevel = 1, CraftingLevel = 1, ArmorCraftingLevel = 1;
@@ -14,10 +15,110 @@ public class PlayerStats {
     //armor stats
     public static int Dexteritypercentage, Intellectpercentage, Strenghtpercentage, Vitalitypercentage;
     public static int armorpercentage, armorPiercingpercentage, critpercentage, attackPowerpercentage, focuspercentage;
-    public static int GatheringLevelpercentage = 0, CraftingLevelpercentage = 0, ArmorCraftingLevelpercentage = 0;
+    public static int GatheringLevelpercentage, CraftingLevelpercentage, ArmorCraftingLevelpercentage;
 
 
+    public static int getExpToNextLevel(){
+        switch (LEVEL){
+            case 1:
+                return 100;
+            case 2:
+                return 100;
+            case 3:
+                return 100;
+            case 4:
+                return 100;
+            case 5:
+                return 100;
+            case 6:
+                return 100;
+            case 7:
+                return 100;
+            case 8:
+                return 100;
+            case 9:
+                return 100;
+            case 10:
+                return 100;
+            case 11:
+                return 100;
+            case 12:
+                return 100;
+            case 13:
+                return 100;
+            case 14:
+                return 100;
+            case 15:
+                return 100;
+            case 16:
+                return 100;
+            case 17:
+                return 100;
+            case 18:
+                return 100;
+            case 19:
+                return 100;
+            case 20:
+                return 100;
+            case 21:
+                return 100;
+            case 22:
+                return 100;
+            case 23:
+                return 100;
+            case 24:
+                return 100;
+            case 25:
+                return 100;
+            case 26:
+                return 100;
+            case 27:
+                return 100;
+            case 28:
+                return 100;
+            case 29:
+                return 100;
+            case 30:
+                return 100;
+            default:
+                return 100;
+
+        }
+    }
     ///////////Getters and Setters//////////////////////////////
+
+    public static float getDMGTakenMod() {
+        return DMGTakenMod;
+    }
+
+    public static void setDMGTakenMod(float DMGTakenMod) {
+        PlayerStats.DMGTakenMod = DMGTakenMod;
+    }
+
+    public static float getDMGDoneMod() {
+        return DMGDoneMod;
+    }
+
+    public static void setDMGDoneMod(float DMGDoneMod) {
+        PlayerStats.DMGDoneMod = DMGDoneMod;
+    }
+
+    public static float getHEALTakenMod() {
+        return HEALTakenMod;
+    }
+
+    public static void setHEALTakenMod(float HEALTakenMod) {
+        PlayerStats.HEALTakenMod = HEALTakenMod;
+    }
+
+    public static float getHEALDoneMod() {
+        return HEALDoneMod;
+    }
+
+    public static void setHEALDoneMod(float HEALDoneMod) {
+        PlayerStats.HEALDoneMod = HEALDoneMod;
+    }
+
     public static int getDexteritypercentage() {
         return Dexteritypercentage;
     }

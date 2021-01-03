@@ -3,19 +3,21 @@ package com.zypo8.games.items.commons;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.zypo8.games.Screens.load_screen.Assets;
 import com.zypo8.games.items.Item;
+import com.zypo8.games.items.ItemLocation;
 import com.zypo8.games.items.ItemRarity;
-import com.zypo8.games.items.Location;
 import com.zypo8.games.ui.HUDStage;
 import com.zypo8.games.ui.Tools;
 import com.zypo8.games.ui.windows.InventoryWindow;
 
 public class Coins extends Item {
     private Label coinsLabel;
-    private int count;
-    public Coins(int count, Location location) {
-        super("img/items/coins.png", 30, ItemRarity.Common, location, "Coins");
+    private final int count;
+    public Coins(int count, ItemLocation itemLocation) {
+        super(Assets.coin, 30, ItemRarity.Common, itemLocation, "Coins");
         this.count = count;
+        description.setText(count);
     }
 
     @Override

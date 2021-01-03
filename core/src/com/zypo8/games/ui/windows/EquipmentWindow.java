@@ -1,11 +1,11 @@
 package com.zypo8.games.ui.windows;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.zypo8.games.actors.player.PlayerStats;
 import com.zypo8.games.items.InventorySlot;
@@ -21,8 +21,7 @@ import com.zypo8.games.items.equipmentSystem.NeckSlot;
 import com.zypo8.games.items.equipmentSystem.OffSlot;
 import com.zypo8.games.items.equipmentSystem.ShoulderSlot;
 import com.zypo8.games.ui.Tools;
-import com.zypo8.games.ui.hud.professions.ProfessionBar;
-import com.zypo8.games.ui.hud.tools.ExpBarr;
+import com.zypo8.games.ui.hud.tools.SpriteActor;
 import com.zypo8.games.ui.hud.tools.WindowWithTopRightCornerCloseButton;
 
 
@@ -39,67 +38,96 @@ public class EquipmentWindow extends WindowWithTopRightCornerCloseButton {
     public static FingerSlot fingerSlot;
     public static MainSlot mainHand;
     public static OffSlot offHand;
-    private TextButton buttonSummary, buttonBack;
-    private boolean eqShowing = true;
+    public static Group PrimaryStatContainer, SecondaryStatContainer, GatheringBars, CraftingBars;
+    private Table eqtable;
 
-    private Table eqtable, statTable;
 
-    private ExpBarr expBarr;
-
-    public Label LevelLabel, HealthLabel, dexterityLabel, intellectLabel, strenghtLabel, armorLabel, armorPiercingLabel, critLabel, attackPowerLabel;
+    public Label vitalityLabel, dexterityLabel, intellectLabel, strenghtLabel, armorLabel, armorPiercingLabel, critLabel, attackPowerLabel, focusLabel;
 
     public EquipmentWindow() {
-        super("Equipment", Tools.getSkin());
+        super("", Tools.getSkin());
         setMovable(true);
         setSize(250, 450);
         setTouchable(Touchable.enabled);
         setBounds(getX(), getY(), getWidth(), getHeight());
         inventorySlots = new Array<>(true, 11);
-//        for (int i=0;i<11;i++)
-//            inventorySlots.add(new InventorySlot());
         slotInit();
-        buttonSummary = new TextButton("Stats", Tools.getSkin());
-        buttonBack = new TextButton("back", Tools.getSkin());
-        buttonSummary.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                buttonSummaryClick();
-            }
-        });
-        buttonBack.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                buttonBackClick();
-            }
-        });
-        expBarr = new ExpBarr();
-        expBarr.setValue(30);
         setUpLabels();
+        setUpStatCointainers();
+        setUpProfesonBars();
         setUpTable();
         addActor(eqtable);
     }
 
-    private void buttonSummaryClick(){
-        eqShowing = false;
-        removeActor(eqtable);
-        addActor(statTable);
+    private void setUpProfesonBars() {
     }
 
-    private void buttonBackClick(){
-        eqShowing = true;
-        removeActor(statTable);
-        addActor(eqtable);
-    }
+    private void setUpStatCointainers() {
+        PrimaryStatContainer = new Group();
+        SecondaryStatContainer = new Group();
+        PrimaryStatContainer.setTouchable(Touchable.enabled);
+        SecondaryStatContainer.setTouchable(Touchable.enabled);
+        PrimaryStatContainer.setBounds(0, 0, 50, 70);
+        SecondaryStatContainer.setBounds(0, 0, 50, 70);
+        //Primary
+        SpriteActor IntellectSprite = new SpriteActor("img/ui/icons/IntellectStat.png");
+        SpriteActor StrengthSprite = new SpriteActor("img/placeHolders/asdad.png");
+        SpriteActor DextrinitySprite = new SpriteActor("img/placeHolders/asdad.png");
+        SpriteActor VitalitySprite = new SpriteActor("img/placeHolders/asdad.png");
+        PrimaryStatContainer.addActor(IntellectSprite);
+        PrimaryStatContainer.addActor(StrengthSprite);
+        PrimaryStatContainer.addActor(DextrinitySprite);
+        PrimaryStatContainer.addActor(VitalitySprite);
+        PrimaryStatContainer.addActor(intellectLabel);
+        PrimaryStatContainer.addActor(strenghtLabel);
+        PrimaryStatContainer.addActor(dexterityLabel);
+        PrimaryStatContainer.addActor(vitalityLabel);
+        IntellectSprite.setPosition(0, 72);
+        StrengthSprite.setPosition(0, 48);
+        DextrinitySprite.setPosition(0, 24);
+        VitalitySprite.setPosition(0, 0);
+        intellectLabel.setPosition(20, 72+intellectLabel.getPrefHeight()/2);
+        strenghtLabel.setPosition(20, 48+strenghtLabel.getPrefHeight()/2);
+        dexterityLabel.setPosition(20, 24+dexterityLabel.getPrefHeight()/2);
+        vitalityLabel.setPosition(20, 0+vitalityLabel.getPrefHeight()/2);
 
+        //Secondary
+        SpriteActor ArmorSprite = new SpriteActor("img/ui/icons/DefenceStat.png");
+        SpriteActor ArmorPiercingSprite = new SpriteActor("img/placeHolders/asdad.png");
+        SpriteActor CritSprite = new SpriteActor("img/placeHolders/asdad.png");
+        SpriteActor FocusSprite = new SpriteActor("img/placeHolders/asdad.png");
+        SpriteActor AttackPowerSprite = new SpriteActor("img/placeHolders/asdad.png");
+        ArmorSprite.setPosition(-20, 72);
+        ArmorPiercingSprite.setPosition(-20, 54);
+        CritSprite.setPosition(-20, 36);
+        FocusSprite.setPosition(-20, 18);
+        AttackPowerSprite.setPosition(-20, 0);
+        armorLabel.setPosition(0, 72+armorLabel.getPrefHeight()/2);
+        armorPiercingLabel.setPosition(0, 54+armorPiercingLabel.getPrefHeight()/2);
+        critLabel.setPosition(0, 36+critLabel.getPrefHeight()/2);
+        focusLabel.setPosition(0, 9+focusLabel.getPrefHeight()/2);
+        attackPowerLabel.setPosition(0, 0+attackPowerLabel.getPrefHeight()/2);
+        SecondaryStatContainer.addActor(ArmorSprite);
+        SecondaryStatContainer.addActor(ArmorPiercingSprite);
+        SecondaryStatContainer.addActor(CritSprite);
+        SecondaryStatContainer.addActor(FocusSprite);
+        SecondaryStatContainer.addActor(AttackPowerSprite);
+        SecondaryStatContainer.addActor(armorLabel);
+        SecondaryStatContainer.addActor(armorPiercingLabel);
+        SecondaryStatContainer.addActor(critLabel);
+        SecondaryStatContainer.addActor(focusLabel);
+        SecondaryStatContainer.addActor(attackPowerLabel);
+
+    }
 
 
     private void setUpTable() {
         eqtable = new Table();
         eqtable.setFillParent(true);
         eqtable.setDebug(false);
-        eqtable.add().expand().padTop(20);
+        eqtable.add(PrimaryStatContainer).expand().padTop(20);
         eqtable.add(headSlot).expand().padTop(20);
-        eqtable.add().height(20).width(20);
+        eqtable.add(SecondaryStatContainer).expand().padTop(20);
         eqtable.row();
         eqtable.add(shoulderSlot).expand();
         eqtable.add(neckSlot).expand();
@@ -113,79 +141,79 @@ public class EquipmentWindow extends WindowWithTopRightCornerCloseButton {
         eqtable.add(legsSlot).expand();
         eqtable.add(offHand).expand();
         eqtable.row();
-        eqtable.add(buttonSummary).width(40);
+        eqtable.add().expand();
         eqtable.add(bootsSlot).expand();
         eqtable.add().expand();
-
-        statTable = new Table();
-        statTable.setFillParent(true);
-        statTable.setDebug(false);
-        statTable.add(new Label("Character Level: ", Tools.getSkin())).expand().padTop(25);
-        statTable.add(LevelLabel).expand().center().padTop(25);
-        statTable.row();
-        statTable.add(new Label("Health: ", Tools.getSkin())).expand();
-        statTable.add(HealthLabel).expand();
-        statTable.row();
-        statTable.add(new Label("Intellect: ", Tools.getSkin())).expand();
-        statTable.add(intellectLabel).expand();
-        statTable.row();
-        statTable.add(new Label("Dexterity: ", Tools.getSkin())).expand();
-        statTable.add(dexterityLabel).expand();
-        statTable.row();
-        statTable.add(new Label("Strenght: ", Tools.getSkin())).expand();
-        statTable.add(strenghtLabel).expand();
-        statTable.row();
-        statTable.add(new Label("armor: ", Tools.getSkin())).expand();
-        statTable.add(armorLabel).expand();
-        statTable.row();
-        statTable.add(new Label("armor piercing: ", Tools.getSkin())).expand();
-        statTable.add(armorPiercingLabel).expand();
-        statTable.row();
-        statTable.add(new Label("Crit: ", Tools.getSkin())).expand();
-        statTable.add(critLabel).expand();
-        statTable.row();
-        statTable.add(new Label("attack power: ", Tools.getSkin())).expand();
-        statTable.add(attackPowerLabel).expand();
-        statTable.row();
-        statTable.add(new Label("Gathering: ", Tools.getSkin())).expand();
-        statTable.add(new Label(String.valueOf(PlayerStats.getGatheringLevel()), Tools.getSkin())).expand();
-        statTable.row();
-        statTable.add(new Label("Crafting: ", Tools.getSkin())).expand();
-        statTable.add(new Label(String.valueOf(PlayerStats.getCraftingLevel()), Tools.getSkin())).expand();
-        statTable.row();
-//        statTable.add(new Label("Armor crafting: ", Tools.getSkin())).expand();
-//        statTable.add(new Label(String.valueOf(PlayerStats.getArmorCraftingLevel()), Tools.getSkin())).expand();
-        statTable.add(new ProfessionBar());
-        statTable.row();
-        //System.out.println(buttonBack);
-        statTable.add(buttonBack).expand();
-        statTable.add(expBarr);
 
     }
 
     private void setUpLabels() {
-
-        LevelLabel = new Label(String.valueOf(PlayerStats.getLEVEL()),Tools.getSkin());
-        HealthLabel = new Label(PlayerStats.getVitality()+"/"+ PlayerStats.getVitalitypercentage(), Tools.getSkin());
-        intellectLabel = new Label(String.valueOf(PlayerStats.getIntellect()), Tools.getSkin());
-        dexterityLabel = new Label(String.valueOf(PlayerStats.getDexterity()), Tools.getSkin());
-        strenghtLabel = new Label(String.valueOf(PlayerStats.getStrenght()), Tools.getSkin());
-        armorLabel = new Label(String.valueOf(PlayerStats.getArmor()), Tools.getSkin());
-        armorPiercingLabel = new Label(String.valueOf(PlayerStats.getArmorPiercing()), Tools.getSkin());
-        critLabel = new Label(String.valueOf(PlayerStats.getCrit()), Tools.getSkin());
-        attackPowerLabel = new Label(String.valueOf(PlayerStats.getAttackPower()), Tools.getSkin());
+        intellectLabel = new Label("", new Label.LabelStyle(new BitmapFont(), new Color(0xc4c118ff)));
+        dexterityLabel = new Label("", new Label.LabelStyle(new BitmapFont(), new Color(0xc4c118ff)));
+        strenghtLabel = new Label("", new Label.LabelStyle(new BitmapFont(), new Color(0xc4c118ff)));
+        vitalityLabel = new Label("", new Label.LabelStyle(new BitmapFont(), new Color(0xc4c118ff)));
+        armorLabel = new Label("", new Label.LabelStyle(new BitmapFont(), new Color(0xc4c118ff)));
+        armorPiercingLabel = new Label("", new Label.LabelStyle(new BitmapFont(), new Color(0xc4c118ff)));
+        critLabel = new Label("", new Label.LabelStyle(new BitmapFont(), new Color(0xc4c118ff)));
+        attackPowerLabel = new Label("", new Label.LabelStyle(new BitmapFont(), new Color(0xc4c118ff)));
+        focusLabel = new Label(String.valueOf(PlayerStats.getStrenght()), new Label.LabelStyle(new BitmapFont(), new Color(0xc4c118ff)));
     }
 
     public void refreshStats() {
-        LevelLabel.setText(String.valueOf(PlayerStats.getLEVEL()));
-        HealthLabel.setText(PlayerStats.getVitality()+"/"+ PlayerStats.getVitalitypercentage());
-        intellectLabel.setText(String.valueOf(PlayerStats.getIntellect()));
-        dexterityLabel.setText(String.valueOf(PlayerStats.getDexterity()));
-        strenghtLabel.setText(String.valueOf(PlayerStats.getStrenght()));
-        armorLabel.setText(String.valueOf(PlayerStats.getArmor()));
-        armorPiercingLabel.setText(String.valueOf(PlayerStats.getArmorPiercing()));
-        critLabel.setText(String.valueOf(PlayerStats.getCrit()));
-        attackPowerLabel.setText(String.valueOf(PlayerStats.getAttackPower()));
+        if(PlayerStats.getIntellectpercentage() > 0)
+            intellectLabel.setText(PlayerStats.getIntellect() + " + " + PlayerStats.getIntellect()*PlayerStats.getIntellectpercentage()/100);
+        else if(PlayerStats.getIntellectpercentage() < 0)
+            intellectLabel.setText(PlayerStats.getIntellect() + " - " + PlayerStats.getIntellect()*PlayerStats.getIntellectpercentage()/100*-1);
+        else intellectLabel.setText(PlayerStats.getIntellect());
+
+        if(PlayerStats.getDexteritypercentage() > 0)
+            dexterityLabel.setText(PlayerStats.getDexterity() + " + " + PlayerStats.getDexterity()*PlayerStats.getDexteritypercentage()/100);
+        else if(PlayerStats.getDexteritypercentage() < 0)
+            dexterityLabel.setText(PlayerStats.getDexterity() + " - " + PlayerStats.getDexterity()*PlayerStats.getDexteritypercentage()/100*-1);
+        else dexterityLabel.setText(PlayerStats.getDexterity());
+
+        if(PlayerStats.getStrenghtpercentage() > 0)
+            strenghtLabel.setText(PlayerStats.getStrenght() + " + " + PlayerStats.getStrenght()*PlayerStats.getStrenghtpercentage()/100);
+        else if(PlayerStats.getStrenghtpercentage() < 0)
+            strenghtLabel.setText(PlayerStats.getStrenght() + " - " + PlayerStats.getStrenght()*PlayerStats.getStrenghtpercentage()/100*-1);
+        else strenghtLabel.setText(PlayerStats.getStrenght());
+
+        if(PlayerStats.getVitalitypercentage() > 0)
+            vitalityLabel.setText(PlayerStats.getVitality() + " + " + PlayerStats.getVitality()*PlayerStats.getVitalitypercentage()/100);
+        else if(PlayerStats.getVitalitypercentage() < 0)
+            vitalityLabel.setText(PlayerStats.getVitality() + " - " + PlayerStats.getVitality()*PlayerStats.getVitalitypercentage()/100*-1);
+        else vitalityLabel.setText(PlayerStats.getVitality());
+
+        if(PlayerStats.getArmorpercentage() > 0)
+            armorLabel.setText(PlayerStats.getArmor() + " + " + PlayerStats.getArmor()*PlayerStats.getArmorpercentage()/100);
+        else if(PlayerStats.getArmorpercentage() < 0)
+            armorLabel.setText(PlayerStats.getArmor() + " - " + PlayerStats.getArmor()*PlayerStats.getArmorpercentage()/100*-1);
+        else armorLabel.setText(PlayerStats.getArmor());
+
+        if(PlayerStats.getArmorPiercingpercentage() > 0)
+            armorPiercingLabel.setText(PlayerStats.getArmorPiercing() + " + " + PlayerStats.getArmorPiercing()*PlayerStats.getArmorPiercingpercentage()/100);
+        else if(PlayerStats.getArmorPiercingpercentage() < 0)
+            armorPiercingLabel.setText(PlayerStats.getArmorPiercing() + " - " + PlayerStats.getArmorPiercing()*PlayerStats.getArmorPiercingpercentage()/100*-1);
+        else armorPiercingLabel.setText(PlayerStats.getArmorPiercing());
+
+        if(PlayerStats.getCritpercentage() > 0)
+            critLabel.setText(PlayerStats.getCrit() + " + " + PlayerStats.getCrit()*PlayerStats.getCritpercentage()/100);
+        else if(PlayerStats.getCritpercentage() < 0)
+            critLabel.setText(PlayerStats.getCrit() + " - " + PlayerStats.getCrit()*PlayerStats.getCritpercentage()/100*-1);
+        else critLabel.setText(PlayerStats.getCrit());
+
+        if(PlayerStats.getAttackPowerpercentage() > 0)
+            attackPowerLabel.setText(PlayerStats.getAttackPower() + " + " + PlayerStats.getAttackPower()*PlayerStats.getAttackPowerpercentage()/100);
+        else if(PlayerStats.getAttackPowerpercentage() < 0)
+            attackPowerLabel.setText(PlayerStats.getAttackPower() + " - " + PlayerStats.getAttackPower()*PlayerStats.getAttackPowerpercentage()/100*-1);
+        else attackPowerLabel.setText(PlayerStats.getAttackPower());
+
+        if(PlayerStats.getFocuspercentage() > 0)
+            focusLabel.setText(PlayerStats.getFocus() + " + " + PlayerStats.getFocus()*PlayerStats.getFocuspercentage()/100);
+        else if(PlayerStats.getFocuspercentage() < 0)
+            focusLabel.setText(PlayerStats.getFocus() + " - " + PlayerStats.getFocus()*PlayerStats.getFocuspercentage()/100*-1);
+        else focusLabel.setText(PlayerStats.getFocus());
+
     }
 
     private void slotInit() {

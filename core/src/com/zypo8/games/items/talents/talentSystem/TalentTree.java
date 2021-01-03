@@ -1,12 +1,16 @@
 package com.zypo8.games.items.talents.talentSystem;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.zypo8.games.actors.player.PlayerStats;
 import com.zypo8.games.items.TalentSlot;
 import com.zypo8.games.items.talents.class_talents.palladyn.Pal1;
 import com.zypo8.games.ui.Tools;
@@ -16,8 +20,12 @@ import java.util.Random;
 
 
 public class TalentTree extends Group {
-    private SpriteActor spriteDPS, spriteTANK, spriteHEAL, spriteUTILITY, spriteLocked;
-    private int talentTreeType;
+    private final SpriteActor spriteDPS;
+    private final SpriteActor spriteTANK;
+    private final SpriteActor spriteHEAL;
+    private final SpriteActor spriteUTILITY;
+    private final SpriteActor spriteLocked;
+    private final int talentTreeType;
     public static int talentTreeCount = 0;
     protected int talentTreeID;
     protected boolean isTaken, active;
@@ -25,6 +33,7 @@ public class TalentTree extends Group {
     public Array<TalentSlot> talentSlots;
     public int talentSpendTree;
     public boolean treeLocked;
+    public Label LevelReq = new Label("Required Level: ", new Label.LabelStyle(new BitmapFont(), Color.FIREBRICK));
 
     private Table talentTable, summaryTable;
 
@@ -70,7 +79,17 @@ public class TalentTree extends Group {
         spriteUTILITY.setZIndex(0);
         summaryTable.setZIndex(1);
 
-        System.out.println(talentSlots.get(9).getParent());
+        if(talentTreeID <= 4){
+            LevelReq.setText("Required Level: 10");
+        }
+        else if(talentTreeID <= 8){
+            LevelReq.setText("Required Level: 25");
+        }
+        else if(talentTreeID <= 12){
+            LevelReq.setText("Required Level: 40");
+        }
+        else
+            LevelReq.setText("Required Level: 50");
     }
 
     @Override
@@ -116,6 +135,8 @@ public class TalentTree extends Group {
         summaryTable.add(take).top();
         summaryTable.add();
         summaryTable.row();
+        summaryTable.add();
+        summaryTable.add(LevelReq);
         summaryTable.add();
     }
 
@@ -181,9 +202,38 @@ public class TalentTree extends Group {
     }
 
     public void take() {
-        isTaken = true;
-        TalentSystem.talentActive(talentTreeID);
-        removeActor(summaryTable);
-        addActor(talentTable);
+        if(talentTreeID <= 4){
+            if(PlayerStats.getLEVEL() > 10){
+                isTaken = true;
+                TalentSystem.talentActive(talentTreeID);
+                removeActor(summaryTable);
+                addActor(talentTable);
+            }
+        }
+        if(talentTreeID <= 8){
+            if(PlayerStats.getLEVEL() > 25){
+                isTaken = true;
+                TalentSystem.talentActive(talentTreeID);
+                removeActor(summaryTable);
+                addActor(talentTable);
+            }
+        }
+        if(talentTreeID <= 12){
+            if(PlayerStats.getLEVEL() > 40){
+                isTaken = true;
+                TalentSystem.talentActive(talentTreeID);
+                removeActor(summaryTable);
+                addActor(talentTable);
+            }
+        }
+        if(talentTreeID <= 16){
+            if(PlayerStats.getLEVEL() > 50){
+                isTaken = true;
+                TalentSystem.talentActive(talentTreeID);
+                removeActor(summaryTable);
+                addActor(talentTable);
+            }
+        }
+
     }
 }

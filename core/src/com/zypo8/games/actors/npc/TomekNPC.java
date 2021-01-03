@@ -1,13 +1,14 @@
 package com.zypo8.games.actors.npc;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.zypo8.games.actors.player.Character;
 import com.zypo8.games.ui.HUDStage;
 
 public class TomekNPC extends Character {
-    public TomekNPC(String spriteFIle, int posX, int posY, HUDStage hudStage) {
-        super(spriteFIle, posX, posY, hudStage, "Tomek");
+    public TomekNPC(AssetDescriptor activeSprite, int posX, int posY, HUDStage hudStage) {
+        super(activeSprite, posX, posY, hudStage, "Tomek");
     }
 
     @Override

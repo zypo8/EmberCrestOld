@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class WindowWithTopRightCornerCloseButton extends Window {
     public WindowWithTopRightCornerCloseButton(String title, Skin skin) {
         super(title, skin);
+        getTitleLabel().setAlignment(1);
 
         final Button closeButton = new TextButton("X", skin);
         closeButton.addListener(new ClickListener() {

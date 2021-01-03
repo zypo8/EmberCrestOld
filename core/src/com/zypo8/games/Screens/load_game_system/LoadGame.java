@@ -7,8 +7,8 @@ import com.zypo8.games.actors.player.Player;
 import com.zypo8.games.actors.player.PlayerStats;
 import com.zypo8.games.actors.player.classes.Classes;
 import com.zypo8.games.items.InventorySlot;
+import com.zypo8.games.items.ItemLocation;
 import com.zypo8.games.items.Items;
-import com.zypo8.games.items.Location;
 import com.zypo8.games.items.TalentSlot;
 import com.zypo8.games.items.armor.Armor;
 import com.zypo8.games.items.talents.talentSystem.TalentTree;
@@ -41,8 +41,8 @@ public class LoadGame {
     public static Player player;
     public static Array<Armor> equipment;
 
-    private MyRPGGame game;
-    private File selectedSave;
+    private final MyRPGGame game;
+    private final File selectedSave;
 
 
     public LoadGame(MyRPGGame game, File selectedSave) {
@@ -70,9 +70,9 @@ public class LoadGame {
     private void initInventory() {
         //System.out.println(inventoryData);
         equipment = new Array<>(11);
-        for(InventorySlot inventorySlot:EquipmentWindow.inventorySlots){
+        for(InventorySlot inventorySlot: EquipmentWindow.inventorySlots){
             if(equipmentData.get("Slot"+inventorySlot.getSlotID()) != null)
-                equipment.add((Armor)Items.getItemById(toIntExact((Long) equipmentData.get("Slot" + inventorySlot.getSlotID())), Location.Equiped));
+                equipment.add((Armor)Items.getItemById(toIntExact((Long) equipmentData.get("Slot" + inventorySlot.getSlotID())), ItemLocation.Equiped));
         }
         for (TalentSlot talentSlot: TalentsWindow.talentSlots){
             if(talentsData.get("Slot"+talentSlot.getSlotID()) != null){

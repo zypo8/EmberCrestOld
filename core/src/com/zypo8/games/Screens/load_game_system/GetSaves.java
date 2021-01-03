@@ -21,7 +21,7 @@ public class GetSaves {
         for (int i = 0; i < files.size(); i++){
             gameSaveButtons.add(new GameSaveButton(files.get(i)));
         }
-        System.out.println(files);
+        //System.out.println(files);
     }
     public String extension (String name) {
         int dotIndex = name.lastIndexOf('.');

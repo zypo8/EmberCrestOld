@@ -24,12 +24,12 @@ import com.zypo8.games.ui.Tools;
 
 public class MenuScreen implements Screen {
     public static MyRPGGame game;
-    private OrthographicCamera camera;
-    private Viewport viewport;
-    private Stage stage;
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
+    private final Stage stage;
     private Table table;
     private TextButton playButton, settingsButton, newGameButton, exitButton;
-    private Sprite backgroundSprite;
+    private final Sprite backgroundSprite;
 
     public MenuScreen(MyRPGGame game) {
         MenuScreen.game = game;

@@ -1,15 +1,21 @@
 package com.zypo8.games.ui.windows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.zypo8.games.actors.player.Player;
 import com.zypo8.games.items.InventorySlot;
+import com.zypo8.games.ui.HUDStage;
 import com.zypo8.games.ui.hud.tools.WindowWithTopRightCornerCloseButton;
 
 public class VendorWindow extends WindowWithTopRightCornerCloseButton {
-    private Array<InventorySlot> inventorySlots;
+    private final Array<InventorySlot> inventorySlots;
     private Table table;
+    public SelectAmountWindow selectAmountWindow;
+
+
     public VendorWindow(String title, Skin skin) {
         super(title, skin);
 
@@ -18,21 +24,22 @@ public class VendorWindow extends WindowWithTopRightCornerCloseButton {
         setTouchable(Touchable.enabled);
         setBounds(getX(), getY(), getWidth(), getHeight());
         setName("Vendor_Window");
-
-
+        setPosition(Gdx.graphics.getWidth()/2-getWidth()/2, Gdx.graphics.getHeight()/2-getHeight()/2);
+        if(selectAmountWindow == null)
+            selectAmountWindow = new SelectAmountWindow(){
+                @Override
+                public void actionOnOkClick() {
+                    HUDStage.lastClickedSlot.getItem().buy(selectedAmount);
+                }
+            };
+        selectAmountWindow.setPosition(getWidth()/2-selectAmountWindow.getWidth()/2, getHeight()/2-selectAmountWindow.getHeight()/2);
         inventorySlots = new Array<>(true, 40);
         for (int i=0;i<40;i++)
-            inventorySlots.add(new com.zypo8.games.items.InventorySlot());
+            inventorySlots.add(new InventorySlot());
         if (table == null)
             setUpTable();
         addActor(table);
-//        inventorySlots.get(0).setItem(new MithrilHelmet());
-//        inventorySlots.get(0).setAmount(1);
-//        inventorySlots.get(0).getItem().setLocation(Location.Vendor);
-//
-//        inventorySlots.get(1).setItem(new EmeraldNeck());
-//        inventorySlots.get(1).setAmount(1);
-//        inventorySlots.get(1).getItem().setLocation(Location.Vendor);
+        addActor(selectAmountWindow);
     }
 
     private void setUpTable(){
@@ -88,21 +95,23 @@ public class VendorWindow extends WindowWithTopRightCornerCloseButton {
 
     public void addItem(InventorySlot newInventorySlot){
         for (int i = 0;i < inventorySlots.size;i++){
-            if(inventorySlots.get(i).getItem() == null)
-                continue;
-            if (newInventorySlot.getItem().getItemID() == inventorySlots.get(i).getItem().getItemID()){
-                if(inventorySlots.get(i).getAmount()+newInventorySlot.getAmount() <= inventorySlots.get(i).getItem().getStackAmount()) {
-                    inventorySlots.get(i).setAmount(inventorySlots.get(i).getAmount() + newInventorySlot.getAmount());
-                    return;
-                }
-            }
-        }
-        for (int i = 0;i < inventorySlots.size;i++){
             if (inventorySlots.get(i).getItem() == null){
                 inventorySlots.get(i).setItem(newInventorySlot.getItem());
                 inventorySlots.get(i).setAmount(newInventorySlot.getAmount());
                 return;
             }
         }
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if(visible)
+            Player.inventoryWindow.setVisible(true);
+    }
+
+    public void showSelectAmountWindow(){
+        selectAmountWindow.changeMaxValue(HUDStage.lastClickedSlot.getItem().getStackAmount());
+        selectAmountWindow.setVisible(true);
     }
 }

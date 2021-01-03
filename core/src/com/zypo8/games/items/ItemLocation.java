@@ -1,9 +1,11 @@
 package com.zypo8.games.items;
 
-public enum Location {
+public enum ItemLocation {
     Inventory(),
     Vendor(),
+    Sold(),
     ActionBar(),
     Equiped(),
-    Loot()
+    Loot(),
+    SpellBoock()
 }

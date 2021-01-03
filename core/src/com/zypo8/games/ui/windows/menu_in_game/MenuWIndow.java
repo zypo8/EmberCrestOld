@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.zypo8.games.MyRPGGame;
 import com.zypo8.games.Screens.GameScreen;
 import com.zypo8.games.Screens.MenuScreen;
-import com.zypo8.games.Screens.new_game_system.save_system.SaveGame;
+import com.zypo8.games.Screens.new_game_system.SaveGame;
 import com.zypo8.games.actors.player.Player;
 import com.zypo8.games.items.InventorySlot;
 import com.zypo8.games.items.talents.talentSystem.TalentSystem;
@@ -23,7 +23,7 @@ import com.zypo8.games.ui.HUDStage;
 import com.zypo8.games.ui.Tools;
 
 public class MenuWIndow extends Window {
-    private TextButton optionsBTN, interfaceBTN, reasumeBTN, menuAndSaveBTN;
+    private TextButton optionsBTN, saveBTN, reasumeBTN, exitBTN;
     private Table table;
     public MenuWIndow() {
         super("", Tools.getSkin());
@@ -46,9 +46,9 @@ public class MenuWIndow extends Window {
 
     private void setUpButtons() {
         optionsBTN = new TextButton("Options", Tools.getSkin());
-        interfaceBTN = new TextButton("Interface", Tools.getSkin());
+        saveBTN = new TextButton("Save", Tools.getSkin());
+        exitBTN = new TextButton("Exit Game", Tools.getSkin());
         reasumeBTN = new TextButton("Reasume", Tools.getSkin());
-        menuAndSaveBTN = new TextButton("Save & Exit", Tools.getSkin());
         optionsBTN.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -56,16 +56,15 @@ public class MenuWIndow extends Window {
                 MyRPGGame.options.hit(0, 0, true);
             }
         });
-        interfaceBTN.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                //buttonBackClick();
-            }
-        });
-        menuAndSaveBTN.addListener(new ClickListener(){
+        saveBTN.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 new SaveGame().createSave();
+            }
+        });
+        exitBTN.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
                 Player.inventoryWindow = null;
                 Player.equipmentWindow = null;
                 Player.talentsWindow = null;
@@ -95,9 +94,9 @@ public class MenuWIndow extends Window {
         table.setFillParent(true);
         table.add(optionsBTN).expand();
         table.row();
-        table.add(interfaceBTN).expand();
+        table.add(saveBTN).expand();
         table.row();
-        table.add(menuAndSaveBTN).expand();
+        table.add(exitBTN).expand();
         table.row();
         table.add(reasumeBTN).expand();
         table.row();

@@ -9,9 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.zypo8.games.MyRPGGame;
 import com.zypo8.games.Screens.GameScreen;
+import com.zypo8.games.Screens.load_screen.Assets;
+import com.zypo8.games.Screens.load_screen.LoadScreen;
+import com.zypo8.games.abilities.skills.Skill;
+import com.zypo8.games.actors.player.PlayerStats;
 import com.zypo8.games.items.armor.SlotType;
 import com.zypo8.games.items.talents.talentSystem.Talent;
-import com.zypo8.games.ui.windows.InventoryWindow;
 
 
 public class InventorySlot extends Group {
@@ -23,8 +26,8 @@ public class InventorySlot extends Group {
     protected Talent talent;
     protected SlotType slotType;
     protected boolean drawBackground = true;
-    private Texture debuffBackground = new Texture(Gdx.files.internal("img/ability/debuffBackground.png"));
-    private Texture useBackground = new Texture(Gdx.files.internal("img/items/Use.png"));
+    private final Texture debuffBackground = (Texture) LoadScreen.assetManager.get(Assets.debuf_bg);
+    private final Texture manaCostTexture = (Texture) LoadScreen.assetManager.get(Assets.mana_cost_texture);
 
     public InventorySlot(Item item, int amount){
         this();
@@ -61,9 +64,33 @@ public class InventorySlot extends Group {
             if(item.isDeBuff){
                 batch.draw(debuffBackground, getX()-1, getY()-1);
             }
-
-            batch.draw(item.sprite, getX(), getY());
-            if(amount > 1 && amount < 10) {
+            if(item instanceof Skill) {
+                if (PlayerStats.getLEVEL() >= ((Skill)item).levelReq)
+                    batch.draw(((Skill)item).sprite, getX(), getY());
+                else
+                    batch.draw(((Skill)item).inActiveSprite, getX(), getY());
+                if(((Skill)item).manaCost > PlayerStats.getMANA()){
+                    batch.draw(manaCostTexture, getX(), getY());
+                }
+            }
+            else {
+                batch.draw(item.sprite, getX(), getY());
+            }
+//            if(item.itemLocation == ItemLocation.Vendor || item.itemLocation == ItemLocation.Sold){
+//                if (item.vendorPrice > 1 && item.vendorPrice < 10) {
+//                    MyRPGGame.font.setColor(Color.GOLD);
+//                    MyRPGGame.font.draw(batch, String.valueOf(item.vendorPrice)+"$", getX() + 22, getY() + 14);
+//                }
+//                if (item.vendorPrice >= 10 && item.vendorPrice <= 99) {
+//                    MyRPGGame.font.setColor(Color.GOLD);
+//                    MyRPGGame.font.draw(batch, String.valueOf(item.vendorPrice)+"$", getX() + 14, getY() + 14);
+//                }
+//                else {
+//                    MyRPGGame.font.setColor(Color.GOLD);
+//                    MyRPGGame.font.draw(batch, String.valueOf(item.vendorPrice)+"$", getX() + 6, getY() + 14);
+//                }
+//            }
+            if (amount > 1 && amount < 10) {
                 MyRPGGame.font.setColor(Color.WHITE);
                 MyRPGGame.font.draw(batch, String.valueOf(amount), getX() + 22, getY() + 14);
             }
@@ -71,10 +98,6 @@ public class InventorySlot extends Group {
                 MyRPGGame.font.setColor(Color.WHITE);
                 MyRPGGame.font.draw(batch, String.valueOf(amount), getX() + 14, getY() + 14);
             }
-
-        if(item.selected){
-            batch.draw(useBackground, getX()-3, getY()-3);
-        }
 
         }
     }
@@ -97,7 +120,6 @@ public class InventorySlot extends Group {
     }
 
     public void removeItem(){
-        InventoryWindow.freeSpace++;
         item.getItemDescriptionWIndow().setVisible(false);
         amount = 0;
         item = null;
@@ -129,5 +151,7 @@ public class InventorySlot extends Group {
     public int getSlotID() {
         return slotID;
     }
+
+
 
 }

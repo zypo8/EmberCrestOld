@@ -3,11 +3,14 @@ package com.zypo8.games.items;
 import com.badlogic.gdx.graphics.Color;
 
 public enum ItemRarity {
-    Common(Color.BLACK, 1),
+    Trash(Color.GRAY, 1),
+    Common(Color.WHITE, 1),
     UnCommon(Color.GREEN, 1),
     Rare(Color.BLUE, 1),
     Epic(Color.PURPLE, 1),
-    Legendary(Color.CYAN, 1);
+    Legendary(Color.CYAN, 1),
+
+    Skill(Color.WHITE, 1);
 
 
     public Color getColor() {

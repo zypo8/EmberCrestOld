@@ -24,9 +24,10 @@ public class CastBar extends ProgressBar{
     public void act(float delta) {
         super.act(delta);
         //setValue(getValue()+1);
-        if(getValue() == getMaxValue()){
-            reset();
-        }
+        if(isVisible())
+            if(getValue() == getMaxValue()){
+                setVisible(false);
+            }
     }
 
     @Override

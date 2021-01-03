@@ -5,12 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.zypo8.games.Screens.GameScreen;
+import com.zypo8.games.actors.player.Player;
 import com.zypo8.games.items.InventorySlot;
 
 public class Buffbar extends Group {
-    public static int freeSpace = 18;
     public static Array<InventorySlot> inventorySlots;
-    private Table table;
+    private final Table table;
 
     public Buffbar(){
         setTouchable(Touchable.enabled);
@@ -37,6 +37,7 @@ public class Buffbar extends Group {
                 if(inventorySlots.get(i).getAmount()+lastClickedSlot.getAmount() <= inventorySlots.get(i).getItem().getStackAmount()) {
                     inventorySlots.get(i).setAmount(inventorySlots.get(i).getAmount() + lastClickedSlot.getAmount());
                     lastClickedSlot.getItem().use();
+                    Player.getEquipmentWindow().refreshStats();
                     return true;
                 }
                 else {
@@ -50,7 +51,7 @@ public class Buffbar extends Group {
                 inventorySlots.get(i).setAmount(lastClickedSlot.getAmount());
                 GameScreen.hud.hudStage.addActor(lastClickedSlot.getItem().getItemDescriptionWIndow());
                 lastClickedSlot.getItem().use();
-                freeSpace--;
+                Player.getEquipmentWindow().refreshStats();
                 return true;
             }
         }

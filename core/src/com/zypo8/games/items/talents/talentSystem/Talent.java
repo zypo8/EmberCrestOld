@@ -1,13 +1,14 @@
 package com.zypo8.games.items.talents.talentSystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.zypo8.games.items.Item;
-import com.zypo8.games.items.Location;
+import com.zypo8.games.items.ItemLocation;
 import com.zypo8.games.items.TalentSlot;
 import com.zypo8.games.ui.HUDStage;
 import com.zypo8.games.ui.Tools;
@@ -20,12 +21,8 @@ public class Talent extends Item {
     public Sprite inActiveSprite;
     public TalentTree talentTree;
 
-    //stats
-    public int Dexterity, Intellect, Strenght, Vitality;
-    public int armor, armorPiercing, crit, attackPower, focus;
-
-    public Talent(String spriteFIle, String inActiveSpriteFile, int itemID, int talentCount, String name) {
-        super(spriteFIle, itemID, name);
+    public Talent(AssetDescriptor assetDescriptor, String inActiveSpriteFile, int itemID, int talentCount, String name) {
+        super(assetDescriptor, itemID, name);
         this.inActiveSprite = new Sprite(new Texture(Gdx.files.internal(inActiveSpriteFile)));
         this.talentCount = talentCount;
         //TalentsWindow.talents.add(this);
@@ -57,6 +54,9 @@ public class Talent extends Item {
     @Override
     public void addTalentPoint() {
         System.out.println(talentTree.getTalentTreeID() +" "+ talentTree.talentSpendTree);
+        if(TalentSystem.avilableTalentPoints < 1)
+            return;
+        TalentSystem.avilableTalentPoints--;
         if(talentTree.talentSpendTree == 15)
             return;
         if(amount < talentCount) {
@@ -96,6 +96,7 @@ public class Talent extends Item {
             TalentSystem.talentSpend--;
             removeTalentPointToTree();
             effect(false);
+            TalentSystem.avilableTalentPoints++;
         }
     }
 
@@ -125,7 +126,7 @@ public class Talent extends Item {
     }
 
     @Override
-    public Location getLocation() {
+    public ItemLocation getItemLocation() {
         System.out.println("ASDADADADASD");
         return null;
     }

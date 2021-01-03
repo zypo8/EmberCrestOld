@@ -4,12 +4,13 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.zypo8.games.Screens.GameScreen;
+import com.zypo8.games.actors.player.Player;
 import com.zypo8.games.items.InventorySlot;
 
 public class DeBuffbar extends Group {
-    public static int freeSpace = 18;
     public static Array<InventorySlot> inventorySlots;
-    private Table table;
+    private final Table table;
 
     public DeBuffbar(){
         setTouchable(Touchable.enabled);
@@ -25,9 +26,8 @@ public class DeBuffbar extends Group {
             }
         }
         addActor(table);
-        //addItem(new InventorySlot(new Sickness(), 1));
     }
-    public static void addItem(InventorySlot lastClickedSlot) {
+    public static boolean addItem(InventorySlot lastClickedSlot) {
         for (int i = 0;i < inventorySlots.size;i++){
             if(inventorySlots.get(i).getItem() == null)
                 continue;
@@ -35,10 +35,11 @@ public class DeBuffbar extends Group {
                 if(inventorySlots.get(i).getAmount()+lastClickedSlot.getAmount() <= inventorySlots.get(i).getItem().getStackAmount()) {
                     inventorySlots.get(i).setAmount(inventorySlots.get(i).getAmount() + lastClickedSlot.getAmount());
                     lastClickedSlot.getItem().use();
-                    return;
+                    Player.getEquipmentWindow().refreshStats();
+                    return true;
                 }
                 else {
-                    return;
+                    return false;
                 }
             }
         }
@@ -46,10 +47,12 @@ public class DeBuffbar extends Group {
             if (inventorySlots.get(i).getItem() == null){
                 inventorySlots.get(i).setItem(lastClickedSlot.getItem());
                 inventorySlots.get(i).setAmount(lastClickedSlot.getAmount());
+                GameScreen.hud.hudStage.addActor(lastClickedSlot.getItem().getItemDescriptionWIndow());
                 lastClickedSlot.getItem().use();
-                freeSpace--;
-                return;
+                Player.getEquipmentWindow().refreshStats();
+                return true;
             }
         }
+        return false;
     }
 }

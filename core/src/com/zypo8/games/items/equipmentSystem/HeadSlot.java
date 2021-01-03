@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.zypo8.games.items.InventorySlot;
 import com.zypo8.games.items.Item;
-import com.zypo8.games.items.Location;
+import com.zypo8.games.items.ItemLocation;
 import com.zypo8.games.items.armor.SlotType;
 
 public class HeadSlot extends InventorySlot {
@@ -18,7 +18,7 @@ public class HeadSlot extends InventorySlot {
     public void setItem(Item item) {
         if(item.getSlotType() == SlotType.Head) {
             super.setItem(item);
-            item.setLocation(Location.Equiped);
+            item.setItemLocation(ItemLocation.Equiped);
         }
         else {
             System.out.println("You are not able to wear it.");

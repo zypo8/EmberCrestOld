@@ -1,15 +1,16 @@
 package com.zypo8.games.items.armor;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.zypo8.games.abilities.buffs.Buff;
+import com.zypo8.games.items.ItemLocation;
 import com.zypo8.games.items.ItemRarity;
-import com.zypo8.games.items.Location;
 
 public class SetPart extends Armor {
     public int setPartId;
     public SetsBonusses setBonus;
     public Buff setBuff;
-    public SetPart(String spriteFIle, int itemID, SlotType slotType, ItemRarity itemRarity, Location location, String name) {
-        super(spriteFIle, itemID, slotType, itemRarity, location, name);
+    public SetPart(AssetDescriptor activeSprite, int itemID, SlotType slotType, ItemRarity itemRarity, ItemLocation itemLocation, String name) {
+        super(activeSprite, itemID, slotType, itemRarity, itemLocation, name);
     }
 
     public void applySetBonus(){

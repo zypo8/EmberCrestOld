@@ -1,28 +1,30 @@
 package com.zypo8.games.items.armor;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
+import com.zypo8.games.abilities.buffs.Buff;
 import com.zypo8.games.actors.player.Player;
 import com.zypo8.games.actors.player.PlayerStats;
 import com.zypo8.games.items.InventorySlot;
 import com.zypo8.games.items.Item;
+import com.zypo8.games.items.ItemLocation;
 import com.zypo8.games.items.ItemRarity;
-import com.zypo8.games.items.Location;
 import com.zypo8.games.ui.HUD;
 import com.zypo8.games.ui.HUDStage;
 import com.zypo8.games.ui.hud.buff_bar.Buffbar;
+import com.zypo8.games.ui.hud.playerFrame.PlayerFrame;
 import com.zypo8.games.ui.windows.EquipmentWindow;
 import com.zypo8.games.ui.windows.InventoryWindow;
 
 public class Armor extends Item {
-    private InventorySlot tempSlot = new InventorySlot();
-    public Armor(String spriteFIle, int itemID, SlotType slotType, ItemRarity itemRarity, Location location, String name) {
-        super(spriteFIle, itemID, name);
+    private final InventorySlot tempSlot = new InventorySlot();
+    public Armor(AssetDescriptor activeSprite, int itemID, SlotType slotType, ItemRarity itemRarity, ItemLocation itemLocation, String name) {
+        super(activeSprite, itemID, itemRarity, name);
         this.slotType = slotType;
-        this.itemRarity = itemRarity;
-        this.location = location;
+        this.itemLocation = itemLocation;
         stackAmount = 1;
     }
 
@@ -54,8 +56,7 @@ public class Armor extends Item {
                     EquipmentWindow.headSlot.setAmount(1);
                     if(HUDStage.lastClickedSlot != null)
                         HUDStage.lastClickedSlot.removeItem();
-                    InventoryWindow.freeSpace++;
-                    location = Location.Equiped;
+                    itemLocation = ItemLocation.Equiped;
                     setBonusCompute(EquipmentWindow.headSlot.getItem());
 
                 } else {
@@ -73,8 +74,7 @@ public class Armor extends Item {
                     EquipmentWindow.bootsSlot.setAmount(1);
                     if(HUDStage.lastClickedSlot != null)
                         HUDStage.lastClickedSlot.removeItem();
-                    InventoryWindow.freeSpace++;
-                    location = Location.Equiped;
+                    itemLocation = ItemLocation.Equiped;
                     setBonusCompute(EquipmentWindow.bootsSlot.getItem());
                 } else {
                     HUD.warningLabel.clearActions();
@@ -91,8 +91,7 @@ public class Armor extends Item {
                     EquipmentWindow.fingerSlot.setAmount(1);
                     if(HUDStage.lastClickedSlot != null)
                         HUDStage.lastClickedSlot.removeItem();
-                    InventoryWindow.freeSpace++;
-                    location = Location.Equiped;
+                    itemLocation = ItemLocation.Equiped;
                     setBonusCompute(EquipmentWindow.fingerSlot.getItem());
                 } else {
                     HUD.warningLabel.clearActions();
@@ -109,8 +108,7 @@ public class Armor extends Item {
                     EquipmentWindow.shoulderSlot.setAmount(1);
                     if(HUDStage.lastClickedSlot != null)
                         HUDStage.lastClickedSlot.removeItem();
-                    InventoryWindow.freeSpace++;
-                    location = Location.Equiped;
+                    itemLocation = ItemLocation.Equiped;
                     setBonusCompute(EquipmentWindow.shoulderSlot.getItem());
                 } else {
                     HUD.warningLabel.clearActions();
@@ -127,7 +125,7 @@ public class Armor extends Item {
                     EquipmentWindow.legsSlot.setAmount(1);
                     if(HUDStage.lastClickedSlot != null)
                         HUDStage.lastClickedSlot.removeItem();
-                    location = Location.Equiped;
+                    itemLocation = ItemLocation.Equiped;
                     setBonusCompute(EquipmentWindow.legsSlot.getItem());
                 } else {
                     HUD.warningLabel.clearActions();
@@ -144,7 +142,7 @@ public class Armor extends Item {
                     EquipmentWindow.glovesSlot.setAmount(1);
                     if(HUDStage.lastClickedSlot != null)
                         HUDStage.lastClickedSlot.removeItem();
-                    location = Location.Equiped;
+                    itemLocation = ItemLocation.Equiped;
                     setBonusCompute(EquipmentWindow.glovesSlot.getItem());
                 } else {
                     HUD.warningLabel.clearActions();
@@ -161,7 +159,7 @@ public class Armor extends Item {
                     EquipmentWindow.mainHand.setAmount(1);
                     if(HUDStage.lastClickedSlot != null)
                         HUDStage.lastClickedSlot.removeItem();
-                    location = Location.Equiped;
+                    itemLocation = ItemLocation.Equiped;
                     setBonusCompute(EquipmentWindow.mainHand.getItem());
                 } else {
                     HUD.warningLabel.clearActions();
@@ -178,7 +176,7 @@ public class Armor extends Item {
                     EquipmentWindow.offHand.setAmount(1);
                     if(HUDStage.lastClickedSlot != null)
                         HUDStage.lastClickedSlot.removeItem();
-                    location = Location.Equiped;
+                    itemLocation = ItemLocation.Equiped;
                     setBonusCompute(EquipmentWindow.offHand.getItem());
                 } else {
                     HUD.warningLabel.clearActions();
@@ -195,7 +193,7 @@ public class Armor extends Item {
                     EquipmentWindow.chestSlot.setAmount(1);
                     if(HUDStage.lastClickedSlot != null)
                         HUDStage.lastClickedSlot.removeItem();
-                    location = Location.Equiped;
+                    itemLocation = ItemLocation.Equiped;
                     setBonusCompute(EquipmentWindow.chestSlot.getItem());
                 } else {
                     HUD.warningLabel.clearActions();
@@ -212,7 +210,7 @@ public class Armor extends Item {
                     EquipmentWindow.neckSlot.setAmount(1);
                     if(HUDStage.lastClickedSlot != null)
                         HUDStage.lastClickedSlot.removeItem();
-                    location = Location.Equiped;
+                    itemLocation = ItemLocation.Equiped;
                     setBonusCompute(EquipmentWindow.neckSlot.getItem());
                 } else {
                     HUD.warningLabel.clearActions();
@@ -223,6 +221,7 @@ public class Armor extends Item {
                 break;
         }
         Player.equipmentWindow.refreshStats();
+        PlayerFrame.refreshPlayerFrame();
     }
 
     @Override
@@ -236,7 +235,7 @@ public class Armor extends Item {
                         if(inventorySlot.getItem().getItemID() == ( (SetPart) HUDStage.lastClickedSlot.getItem()).getSetBuff().getItemID()) {
                             InventorySlot tempSlot = HUDStage.lastClickedSlot;
                             HUDStage.lastClickedSlot = inventorySlot;
-                            inventorySlot.getItem().itemInteractWindow(null, null);
+                            ((Buff)inventorySlot.getItem()).itemInteractWindow(null, null);
                             HUDStage.lastClickedSlot = tempSlot;
                         }
                 }
@@ -244,8 +243,8 @@ public class Armor extends Item {
 
             HUDStage.lastClickedSlot.removeItem();
             //location = Location.Inventory;
-            InventoryWindow.freeSpace--;
             Player.equipmentWindow.refreshStats();
+            PlayerFrame.refreshPlayerFrame();
             return true;
         }
         else {
@@ -270,10 +269,22 @@ public class Armor extends Item {
         PlayerStats.setDexterity(PlayerStats.getDexterity()-item.Dexterity);
         PlayerStats.setStrenght(PlayerStats.getStrenght()-item.Strenght);
         PlayerStats.setIntellect(PlayerStats.getIntellect()-item.Intellect);
-        PlayerStats.setHEALTH(PlayerStats.getHEALTH()-item.HELATH);
+        PlayerStats.setMaxHEALTH(PlayerStats.getMaxHEALTH()-item.HELATH);
+
+        //procentage
+        PlayerStats.setArmorpercentage(PlayerStats.getArmorpercentage()-item.armorpercentage);
+        PlayerStats.setArmorPiercingpercentage(PlayerStats.getArmorPiercingpercentage()-item.armorPiercingpercentage);
+        PlayerStats.setCritpercentage(PlayerStats.getCritpercentage()-item.critpercentage);
+        PlayerStats.setFocuspercentage(PlayerStats.getFocuspercentage()-item.focuspercentage);
+        PlayerStats.setAttackPowerpercentage(PlayerStats.getAttackPowerpercentage()-item.attackPowerpercentage);
+        PlayerStats.setVitalitypercentage(PlayerStats.getVitalitypercentage()-item.Vitalitypercentage);
+        PlayerStats.setIntellectpercentage(PlayerStats.getIntellectpercentage()-item.Intellectpercentage);
+        PlayerStats.setStrenghtpercentage(PlayerStats.getStrenghtpercentage()-item.Strenghtpercentage);
+        PlayerStats.setDexteritypercentage(PlayerStats.getDexteritypercentage()-item.Dexteritypercentage);
     }
 
     private void addStats(Item item) {
+        System.out.println(item.getName()+ "  "+item.Strenghtpercentage);
         //secondary
         PlayerStats.setArmor(PlayerStats.getArmor()+item.armor);
         PlayerStats.setCrit(PlayerStats.getCrit()+item.crit);
@@ -287,14 +298,26 @@ public class Armor extends Item {
         PlayerStats.setDexterity(PlayerStats.getDexterity()+item.Dexterity);
         PlayerStats.setStrenght(PlayerStats.getStrenght()+item.Strenght);
         PlayerStats.setIntellect(PlayerStats.getIntellect()+item.Intellect);
-        PlayerStats.setHEALTH(PlayerStats.getHEALTH()+item.HELATH);
+        PlayerStats.setMaxHEALTH(PlayerStats.getMaxHEALTH()+item.HELATH);
+
+
+        //procentage
+        PlayerStats.setArmorpercentage(PlayerStats.getArmorpercentage()+item.armorpercentage);
+        PlayerStats.setArmorPiercingpercentage(PlayerStats.getArmorPiercingpercentage()+item.armorPiercingpercentage);
+        PlayerStats.setCritpercentage(PlayerStats.getCritpercentage()+item.critpercentage);
+        PlayerStats.setFocuspercentage(PlayerStats.getFocuspercentage()+item.focuspercentage);
+        PlayerStats.setAttackPowerpercentage(PlayerStats.getAttackPowerpercentage()+item.attackPowerpercentage);
+        PlayerStats.setVitalitypercentage(PlayerStats.getVitalitypercentage()+item.Vitalitypercentage);
+        PlayerStats.setIntellectpercentage(PlayerStats.getIntellectpercentage()+item.Intellectpercentage);
+        PlayerStats.setStrenghtpercentage(PlayerStats.getStrenghtpercentage()+item.Strenghtpercentage);
+        PlayerStats.setDexteritypercentage(PlayerStats.getDexteritypercentage()+item.Dexteritypercentage);
     }
 
 
     private void setBonusCompute(Item item){
         if(item instanceof SetPart){
             System.out.println("Equiped SetPart");
-            Array<Integer> requiredItemsIds = new Array<>( true, ((SetPart)item).getSetBonus().getItemsRequired(), 0, 10);
+            Array<Integer> requiredItemsIds = new Array<>( true, ((SetPart)item).getSetBonus().getSetItemsRequired(), 0, 10);
             Array<Boolean> setItemsEquiped = checkSetItemsEquiped(requiredItemsIds);
             System.out.println(requiredItemsIds+ "\n"+ setItemsEquiped);
             if(!setItemsEquiped.contains(false, true)){
@@ -311,7 +334,7 @@ public class Armor extends Item {
                 tempArray.add(true);
                 continue;
             }
-            for(InventorySlot inventorySlot:EquipmentWindow.inventorySlots){
+            for(InventorySlot inventorySlot: EquipmentWindow.inventorySlots){
                 if(inventorySlot.getItem() != null){
                     if(inventorySlot.getItem() instanceof SetPart){
                         if(inventorySlot.getItem().getItemID() == id) {

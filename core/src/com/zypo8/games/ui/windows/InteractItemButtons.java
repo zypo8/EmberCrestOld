@@ -1,15 +1,20 @@
 package com.zypo8.games.ui.windows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.zypo8.games.actors.npc.Vendor;
+import com.zypo8.games.actors.player.Player;
 import com.zypo8.games.items.Item;
+import com.zypo8.games.ui.HUD;
+import com.zypo8.games.ui.HUDStage;
 
 public class InteractItemButtons {
-    private TextButton consume, use, drop, equip, unequip, take, select, addTalent,
-            removeTalent, addToActionBar, removeFromActionBar, buy, BTNinfo;
-    private Skin skin;
+    private TextButton consume, use, drop, equip, unequip, take, addSkillToBar, addTalent,
+            removeTalent, addToActionBar, removeFromActionBar, buy, buyBack, BTNinfo, sell, sellOne, sellAll;
+    private final Skin skin;
 
     public InteractItemButtons(Skin skin){
         this.skin = skin;
@@ -76,16 +81,16 @@ public class InteractItemButtons {
         return take;
     }
 
-    public TextButton addSelectButton(final Item item){
-        select = new TextButton("select", skin);
-        select.addListener(new ClickListener(){
+    public TextButton addSkillToBar(final Item item){
+        addSkillToBar = new TextButton("add to bar", skin);
+        addSkillToBar.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("selected " + item.getName());
-                item.select();
+                System.out.println("added to action bar " + item.getName());
+                item.addToActionBar(item.getItemID());
             }
         });
-        return select;
+        return addSkillToBar;
     }
 
     public TextButton addUnequipItem(final Item item){
@@ -93,9 +98,9 @@ public class InteractItemButtons {
         unequip.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("unequiped " + item.getName()+item.getLocation());
+                System.out.println("unequiped " + item.getName()+item.getItemLocation());
                 item.unequip();
-                System.out.println("unequiped " + item.getName()+item.getLocation());
+                System.out.println("unequiped " + item.getName()+item.getItemLocation());
             }
         });
         return unequip;
@@ -155,10 +160,64 @@ public class InteractItemButtons {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("bought " + item.getName());
-                item.buy();
+                if(Player.playerInteractNPC instanceof Vendor){
+                    ((Vendor)Player.playerInteractNPC).getVendorWindow().showSelectAmountWindow();
+                }
             }
         });
         return buy;
+    }
+
+    public TextButton addBuyBack(final Item item){
+        buyBack = new TextButton("Buy back", skin);
+        buyBack.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("bought " + item.getName());
+                item.buyback();
+            }
+        });
+        return buyBack;
+    }
+
+
+    public TextButton addSellOne(final Item item){
+        sellOne = new TextButton("Sell 1", skin);
+        sellOne.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("sold " + item.getName());
+                item.sell(1);
+            }
+        });
+        return sellOne;
+    }
+
+    public TextButton addSell(final Item item){
+        sell = new TextButton("Sell", skin);
+        sell.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("sold " + item.getName());
+                HUD.selectAmountWindow.changeMaxValue(HUDStage.lastClickedSlot.getAmount());
+                HUD.selectAmountWindow.setVisible(true);
+                HUD.selectAmountWindow.setPosition(Gdx.input.getX()+40, Gdx.input.getY()+40);
+                //HUD.selectAmountWindow.
+            }
+        });
+        return sell;
+    }
+
+    public TextButton addSellAll(final Item item){
+        sellAll = new TextButton("Sell All", skin);
+        sellAll.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("sold " + item.getName());
+                item.sell(9999);
+            }
+        });
+        return sellAll;
     }
 
     public TextButton BTNinfo(final Item item){
@@ -166,7 +225,7 @@ public class InteractItemButtons {
         buy.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println(item.getLocation()+"BTNinfo  " + item.getName());
+                System.out.println(item.getItemLocation()+"BTNinfo  " + item.getName());
                 item.BTNinfo();
             }
         });

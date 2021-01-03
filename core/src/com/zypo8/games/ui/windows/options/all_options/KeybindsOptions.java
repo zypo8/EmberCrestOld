@@ -13,6 +13,7 @@ import com.zypo8.games.ui.windows.options.LoadOptions;
 import com.zypo8.games.ui.windows.options.SaveOptions;
 
 public class KeybindsOptions extends Table {
+    public static String W="W";
     Label label = new Label("KeybindsOptions", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     public CheckBox checkBox;
     TextButton applyButton;
@@ -32,6 +33,7 @@ public class KeybindsOptions extends Table {
                 new LoadOptions();
             }
         });
+        //on load load from fili
     }
 
     private void initTable() {

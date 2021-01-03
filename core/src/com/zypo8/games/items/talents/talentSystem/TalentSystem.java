@@ -23,7 +23,7 @@ public class TalentSystem {
     public static Array<TalentTree> talentTrees;
     public Table table;
     public static int talentSpend;
-    //public static int talentPoints = 0;
+    public static int avilableTalentPoints;
 
     public TalentSystem(Boolean override){
 

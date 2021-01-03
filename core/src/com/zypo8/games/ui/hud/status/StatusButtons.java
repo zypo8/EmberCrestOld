@@ -12,19 +12,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.zypo8.games.MyRPGGame;
-import com.zypo8.games.Screens.new_game_system.save_system.AutoSave;
+import com.zypo8.games.Screens.new_game_system.AutoSave;
 import com.zypo8.games.actors.player.Player;
 import com.zypo8.games.ui.HUD;
 import com.zypo8.games.ui.Tools;
-
-import static com.zypo8.games.actors.player.Player.equipmentWindow;
 
 public class StatusButtons extends Group {
     private ImageButton inventoryIB, talentsIB, questLogIB, equipmentIB, spellBookIB, saveIB, optionsIB;
     private Table table;
     public StatusButtons(){
 
-
+        //scaleBy(0.7f);
         setUpButtons();
         setUpTable();
         addActor(table);
@@ -61,6 +59,7 @@ public class StatusButtons extends Group {
         talentsIB.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Player.talentsWindow.setZIndex(99999);
                 Player.talentsWindow.setVisible(!Player.talentsWindow.isVisible());
             }
         });
@@ -73,13 +72,13 @@ public class StatusButtons extends Group {
         equipmentIB.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Player.equipmentWindow.setVisible(!equipmentWindow.isVisible());
+                Player.equipmentWindow.setVisible(!Player.equipmentWindow.isVisible());
             }
         });
         spellBookIB.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Spell Book");
+                Player.spellBoockWindow.setVisible(!Player.spellBoockWindow.isVisible());
             }
         });
         saveIB.addListener(new ClickListener(){

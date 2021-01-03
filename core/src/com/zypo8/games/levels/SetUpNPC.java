@@ -1,18 +1,19 @@
 package com.zypo8.games.levels;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.zypo8.games.Screens.load_screen.Assets;
 import com.zypo8.games.actors.gatherable.MithrillOre;
 import com.zypo8.games.actors.npc.Vendor;
 import com.zypo8.games.actors.stairs.Stairs;
 import com.zypo8.games.ui.HUDStage;
 
 public class SetUpNPC extends Group {
-    private HUDStage hudStage;
-    private SetUpNpc0 setUpNpc0;
-    private SetUpNpc1 setUpNpc1;
-    private SetUpNpc2 setUpNpc2;
-    private SetUpNpc3 setUpNpc3;
-    private SetUpNpc4 setUpNpc4;
+    private final HUDStage hudStage;
+    private final SetUpNpc0 setUpNpc0;
+    private final SetUpNpc1 setUpNpc1;
+    private final SetUpNpc2 setUpNpc2;
+    private final SetUpNpc3 setUpNpc3;
+    private final SetUpNpc4 setUpNpc4;
     public SetUpNPC(HUDStage hudStage){
         this.hudStage = hudStage;
         setUpNpc0 = new SetUpNpc0();
@@ -54,15 +55,15 @@ public class SetUpNPC extends Group {
     private class SetUpNpc0 extends Group {
         public SetUpNpc0() {
             addActor(new Vendor(10*32, 9*32,hudStage));
-            addActor( new MithrillOre(8*32, 8*32, hudStage));
-            addActor(new Stairs("img/characters/stairs.png", 9*32,9*32,hudStage, "Stairs",0,1));
+            addActor(new MithrillOre(8*32, 8*32, hudStage));
+            addActor(new Stairs(Assets.stairs, 9*32,9*32,hudStage, "Stairs",0,1));
         }
     }
 
     private class SetUpNpc1 extends Group {
         public SetUpNpc1() {
             addActor(new Vendor(4*32, 4*32, hudStage));
-            addActor(new Stairs("img/characters/stairs.png", 9*32, 9*32, hudStage, "Stairs", 0, 1));
+            addActor(new Stairs(Assets.stairs, 9*32, 9*32, hudStage, "Stairs", 0, 1));
         }
     }
 
@@ -70,7 +71,7 @@ public class SetUpNPC extends Group {
     private class SetUpNpc2 extends Group {
         public SetUpNpc2() {
             addActor(new Vendor(4*32, 4*32, hudStage));
-            addActor(new Stairs("img/characters/stairs.png", 9*32, 9*32, hudStage, "Stairs", 0, 1));
+            addActor(new Stairs(Assets.stairs, 9*32, 9*32, hudStage, "Stairs", 0, 1));
         }
     }
 

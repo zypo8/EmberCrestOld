@@ -26,7 +26,12 @@ public class PlayerFrame extends Group {
     public Label nameLabel;
     public ActorSprite playerFrame;
     public PlayerFrame() {
+        setTouchable(Touchable.enabled);
+        setName("Player Frame");
         playerFrame = new ActorSprite();
+        setWidth(playerFrame.sprite.getWidth());
+        setHeight(playerFrame.sprite.getHeight());
+        setBounds(getX(), getY(), getWidth(), getHeight());
         levelLabel = new Label(String.valueOf(PlayerStats.getLEVEL()), new Label.LabelStyle(new BitmapFont(), Color.FIREBRICK));
         levelLabel.setFontScale(1.4f);
         PlayerFrame.refreshLevelLabelText();
@@ -48,7 +53,8 @@ public class PlayerFrame extends Group {
         levelLabel.setTouchable(Touchable.disabled);
 
         expBar = new ExpBar();
-        expBar.setPosition(-24, -4);
+        expBar.setPosition(35, 55);
+        expBar.rotateBy(180);
 
 
         addActor(expBar);
@@ -60,17 +66,23 @@ public class PlayerFrame extends Group {
         addActor(hpLabel);
         addActor(manaLabel);
         playerFrame.setZIndex(3);
-        expBar.setZIndex(2);
+        expBar.setZIndex(1);
         hp.setZIndex(1);
         levelLabel.setZIndex(4);
         mana.setZIndex(0);
         nameLabel.setZIndex(5);
+        Actor actor = new Actor();
+        actor.setTouchable(Touchable.enabled);
+        actor.setName("exp Bar");
+        actor.setPosition(-20, 0);
+        actor.setBounds(getX(), getY(), expBar.getWidth(), expBar.getHeight());
+        addActor(actor);
+        actor.setZIndex(9999);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-
     }
 
     @Override
@@ -109,6 +121,19 @@ public class PlayerFrame extends Group {
         manaLabel.setPosition(-manaLabel.getWidth()/2+110, -manaLabel.getHeight()/2+8);
 
     }
+
+    public static void refreshExp() {
+        expBar.setValue(PlayerStats.getEXP(), PlayerStats.getExpToNextLevel());
+    }
+
+    public static void refreshPlayerFrame(){
+        refreshHp();
+        refreshExp();
+        refreshMana();
+        refreshLevelLabelText();
+    }
+
+
 
 
     private class ActorSprite extends Actor {

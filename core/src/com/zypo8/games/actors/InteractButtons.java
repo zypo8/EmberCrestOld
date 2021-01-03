@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class InteractButtons extends Group {
-    private TextButton inventory, talents, vendor, quest, equipment, options, talk;
-    private Skin skin;
+    private TextButton inventory, talents, vendor, quest, equipment, options, talk, goUp, goDown, gather;
+    private final Skin skin;
 
     public InteractButtons(Skin skin){
         this.skin = skin;
@@ -88,39 +88,39 @@ public class InteractButtons extends Group {
     }
 
     public TextButton addGatherButton(final Interactable interactable){
-        options = new TextButton("gather", skin);
-        options.addListener(new ClickListener(){
+        gather = new TextButton("gather", skin);
+        gather.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("gathered " + interactable.getName());
                 interactable.showGather();
             }
         });
-        return options;
+        return gather;
     }
 
     public TextButton goDown(final Interactable interactable){
-        options = new TextButton("down", skin);
-        options.addListener(new ClickListener(){
+        goDown = new TextButton("down", skin);
+        goDown.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("down " + interactable.getName());
                 interactable.goDown();
             }
         });
-        return options;
+        return goDown;
     }
 
     public TextButton goUp(final Interactable interactable){
-        options = new TextButton("up", skin);
-        options.addListener(new ClickListener(){
+        goUp = new TextButton("up", skin);
+        goUp.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("up " + interactable.getName());
                 interactable.goUp();
             }
         });
-        return options;
+        return goUp;
     }
 
     public TextButton addTalkButton(final Interactable interactable){

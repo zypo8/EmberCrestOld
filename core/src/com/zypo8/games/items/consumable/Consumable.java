@@ -1,13 +1,14 @@
 package com.zypo8.games.items.consumable;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.zypo8.games.items.Item;
+import com.zypo8.games.items.ItemLocation;
 import com.zypo8.games.items.ItemRarity;
-import com.zypo8.games.items.Location;
 
 public class Consumable extends Item {
 
-    public Consumable(String spriteFIle, int itemID, ItemRarity itemRarity, Location location, String name) {
-        super(spriteFIle, itemID, itemRarity, location, name);
+    public Consumable(AssetDescriptor activeSprite, int itemID, ItemRarity itemRarity, ItemLocation itemLocation, String name) {
+        super(activeSprite, itemID, itemRarity, itemLocation, name);
         stackAmount = 20;
         vendorPrice = 200;
     }

@@ -7,9 +7,8 @@ import com.badlogic.gdx.utils.Array;
 import com.zypo8.games.items.InventorySlot;
 
 public class Actionbar extends Group {
-    public static int freeSpace = 12;
     public static Array<InventorySlot> inventorySlots;
-    private Table table;
+    private final Table table;
 
     public Actionbar(){
         setTouchable(Touchable.enabled);
@@ -25,6 +24,7 @@ public class Actionbar extends Group {
     }
 
     public static boolean addItem(InventorySlot lastClickedSlot) {
+        System.out.println(lastClickedSlot.getName() +"ASDDDDDDDDDDDDDDDDDDDDDD");
         for (int i = 0;i < inventorySlots.size;i++){
             if(inventorySlots.get(i).getItem() == null)
                 continue;

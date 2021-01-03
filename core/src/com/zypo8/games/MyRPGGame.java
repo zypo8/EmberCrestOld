@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.zypo8.games.Screens.MenuScreen;
+import com.zypo8.games.Screens.new_game_system.CreateNewSave;
 import com.zypo8.games.ui.windows.menu_in_game.MenuWIndow;
 import com.zypo8.games.ui.windows.options.LoadOptions;
 import com.zypo8.games.ui.windows.options.Options;
@@ -18,6 +19,7 @@ public class MyRPGGame extends Game {
 	public static MenuWIndow menuWIndow;
 	@Override
 	public void create () {
+		CreateNewSave.createDircectory();
 		new LoadOptions();
 		batch = new SpriteBatch();
 		font = new BitmapFont();

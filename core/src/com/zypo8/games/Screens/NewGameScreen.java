@@ -14,24 +14,24 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zypo8.games.MyRPGGame;
+import com.zypo8.games.Screens.new_game_system.CreateNewSave;
 import com.zypo8.games.Screens.new_game_system.MagicIcons;
 import com.zypo8.games.Screens.new_game_system.NewGameStage;
 import com.zypo8.games.Screens.new_game_system.TechIcons;
-import com.zypo8.games.Screens.new_game_system.save_system.CreateNewSave;
 import com.zypo8.games.ui.Tools;
 
 public class NewGameScreen implements Screen {
-    private MyRPGGame game;
-    private OrthographicCamera camera;
-    private Viewport viewport;
-    private NewGameStage stage;
+    private final MyRPGGame game;
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
+    private final NewGameStage stage;
     private Table table;
     private TextButton backButton, createButton;
     private TextField nameField;
 
-    private MagicIcons magicIcons;
-    private TechIcons techIcons;
-    private Sprite backgroundSprite;
+    private final MagicIcons magicIcons;
+    private final TechIcons techIcons;
+    private final Sprite backgroundSprite;
 
     public NewGameScreen(MyRPGGame game) {
         this.game = game;
