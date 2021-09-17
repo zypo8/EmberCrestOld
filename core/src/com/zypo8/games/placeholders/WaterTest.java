@@ -8,7 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class WaterTest extends Actor {
     private boolean state1 = true;
-    private Sprite sprite, sprite2;
+    private final Sprite sprite;
+    private final Sprite sprite2;
 
     public WaterTest(String file1, String file2, int x, int y){
         sprite = new Sprite(new Texture(Gdx.files.internal(file1)));

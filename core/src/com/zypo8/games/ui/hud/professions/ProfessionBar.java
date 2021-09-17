@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.zypo8.games.ui.Tools;
 
 public class ProfessionBar extends Group {
-    private ProgressBar progressBar = new ProgressBar(0, 100, 0.1f, false, Tools.getSkin());
-    private Sprite sprite = new Sprite(new Texture(Gdx.files.internal("img/ui/professions/crafting.png")));
+    private final ProgressBar progressBar = new ProgressBar(0, 100, 0.1f, false, Tools.getSkin());
+    private final Sprite sprite = new Sprite(new Texture(Gdx.files.internal("img/ui/professions/crafting.png")));
     public ProfessionBar(){
         progressBar.setHeight(40);
         progressBar.setWidth(80);

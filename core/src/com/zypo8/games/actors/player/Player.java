@@ -1,6 +1,8 @@
 package com.zypo8.games.actors.player;
 
 
+import static com.zypo8.games.ui.HUD.setCombatText;
+
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapLayers;
@@ -17,8 +19,6 @@ import com.zypo8.games.ui.windows.EquipmentWindow;
 import com.zypo8.games.ui.windows.InventoryWindow;
 import com.zypo8.games.ui.windows.SpellBoockWindow;
 import com.zypo8.games.ui.windows.TalentsWindow;
-
-import static com.zypo8.games.ui.HUD.setCombatText;
 
 public class Player extends Character{
 

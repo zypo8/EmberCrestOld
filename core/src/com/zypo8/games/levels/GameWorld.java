@@ -10,7 +10,7 @@ import com.zypo8.games.ui.HUDStage;
 public class GameWorld {
     public TiledMap map;
     public OrthogonalTiledMapRenderer renderer;
-    private SetUpNPC setUpNPC;
+    private final SetUpNPC setUpNPC;
 
     public GameWorld(StageGameScreen gameScreenStage, HUDStage hudStage){
         setUpNPC = new SetUpNPC(hudStage);

@@ -15,7 +15,7 @@ import com.zypo8.games.items.Item;
 
 public class LootWindow extends Window {
     private Table table;
-    private Array<InventorySlot> inventorySlots;
+    private final Array<InventorySlot> inventorySlots;
     public LootWindow(String title, Skin skin) {
         super(title, skin);
 

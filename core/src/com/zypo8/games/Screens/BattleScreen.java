@@ -11,8 +11,8 @@ import com.zypo8.games.MyRPGGame;
 
 public class BattleScreen implements Screen {
     private OrthographicCamera camera;
-    private MyRPGGame game;
-    private GameScreen gameScreen;
+    private final MyRPGGame game;
+    private final GameScreen gameScreen;
     private Viewport viewport;
     private Stage stage;
 

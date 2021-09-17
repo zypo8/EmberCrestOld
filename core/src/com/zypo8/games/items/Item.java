@@ -1,5 +1,7 @@
 package com.zypo8.games.items;
 
+import static java.lang.StrictMath.min;
+
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,8 +29,6 @@ import com.zypo8.games.ui.hud.playerFrame.PlayerFrame;
 import com.zypo8.games.ui.windows.InteractItemButtons;
 import com.zypo8.games.ui.windows.InventoryWindow;
 import com.zypo8.games.ui.windows.ItemDescriptionWIndow;
-
-import static java.lang.StrictMath.min;
 
 public class Item extends Group {
 

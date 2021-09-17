@@ -11,7 +11,7 @@ import com.zypo8.games.ui.Tools;
 import java.io.File;
 
 public class GameSaveButton extends Group {
-    private Window window;
+    private final Window window;
     private File file;
     private boolean selected;
     public GameSaveButton(final File file){

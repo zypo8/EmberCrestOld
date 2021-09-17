@@ -32,7 +32,7 @@ public class ScrollPanel extends WidgetGroup {
     final Rectangle vKnobBounds = new Rectangle();
     private final Rectangle widgetAreaBounds = new Rectangle();
     private final Rectangle widgetCullingArea = new Rectangle();
-    private ActorGestureListener flickScrollListener;
+    private final ActorGestureListener flickScrollListener;
 
     boolean scrollX, scrollY;
     boolean vScrollOnRight = true;
